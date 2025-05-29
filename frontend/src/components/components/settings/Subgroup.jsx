@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 
 function Subgroup() {
+  const { t } = useTranslation();
   const subgroups = ["1", "2"];
   const [selectedSubgroup, setSelectedSubgroup] = useState(() => {
     return localStorage.getItem('selectedSubgroup') || '208';
@@ -14,9 +16,9 @@ function Subgroup() {
 
   return (
     <div className="flex flex-row justify-between">
-      <p>Підгрупа</p>
+      <p>{t("Subgroup")}</p>
       <select value={selectedSubgroup} onChange={e => setSelectedSubgroup(e.target.value)}>
-        <option value="" disabled>Оберіть підгрупу</option>
+        <option value="" disabled>{t("Choose subgroup")}</option>
         {subgroups.map(subgroup => (
           <option key={subgroup} value={subgroup}>{subgroup}</option>
         ))}

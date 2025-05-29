@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 
 function LessonNow(){
   const [currentLesson, setCurrentLesson] = useState(null);
+  const { t } = useTranslation();
   const days = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "Пʼятниця", "Субота"];
   
   useEffect(() => {
@@ -26,13 +28,13 @@ function LessonNow(){
     <div className="w-full h-max p-5 flex flex-col gap-2 shadow-md rounded-md dark:bg-gray-800 dark:text-gray-200">
       {currentLesson ? (
         <>
-          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{days[parseInt(currentLesson.day_of_week)]}</p>
+          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{t(`days.${parseInt(currentLesson.day_of_week)}`)}</p>
           <p className="text-base md:text-lg font-semibold text-gray-950 dark:text-gray-200">{currentLesson.start_time} - {currentLesson.end_time}</p>
           <p className="text-base md:text-lg font-semibold text-gray-950 dark:text-gray-200">{currentLesson.subject}</p>
           <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{currentLesson.teacher}</p>
         </>
       ) : (
-        <p className="text-gray-500 dark:text-gray-400">Зараз немає пари</p>
+        <p className="text-gray-500 dark:text-gray-400">{t("No Lesson now")}</p>
       )}
     </div>
   )

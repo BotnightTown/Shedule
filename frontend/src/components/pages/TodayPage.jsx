@@ -1,10 +1,12 @@
 import TodayLessons from "../components/TodayLessons";
 import LessonNow from "../components/LessonNow";
 import { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 import axios from "axios";
 
 function TodayPage({ sidebarOpen }) {
   const [allTodayLesson, setAllTodayLesson] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchTodayLesson = async () => {
@@ -23,16 +25,16 @@ function TodayPage({ sidebarOpen }) {
 
   return (
     <div className={`w-full h-full flex flex-col ${!sidebarOpen ? 'p-5 pt-0' : ''} gap-5 transition-all duration-300`}>
-      <p className="text-2xl md:text-3xl font-medium">Today</p>
+      <p className="text-2xl md:text-3xl font-medium">{t('Today')}</p>
       <LessonNow />
-      <p className="font-semibold text-xl md:text-2xl text-gray-950 dark:text-gray-200">Today's Lessons</p>
+      <p className="font-semibold text-xl md:text-2xl text-gray-950 dark:text-gray-200">{t("Today's Lessons")}</p>
       <div className="shadow-md rounded-md">
         {allTodayLesson.length === 0
           ? <p className="p-5">No lessons today</p>
           : allTodayLesson.map((lesson, index) => (
               <TodayLessons
                 key={index}
-                number={`${lesson.pair_number} пара`}
+                number={`${lesson.pair_number} ${t("Lesson(pair)")}`}
                 classroom={lesson.classroom || "-"}
                 time={`${lesson.start_time} - ${lesson.end_time}`}
                 name={lesson.subject || "-"}

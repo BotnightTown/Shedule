@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { IoChevronForward } from "react-icons/io5";
+import { useTranslation } from 'react-i18next';
 
 function NewNoteModal({ onClose, onSave }) {
+  const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
@@ -29,16 +31,16 @@ function NewNoteModal({ onClose, onSave }) {
         >
           ✕
         </button>
-        <h2 className="text-lg md:text-xl font-semibold mb-4">New Note</h2>
+        <h2 className="text-lg md:text-xl font-semibold mb-4">{t('New Note')}</h2>
         <input
           type="text"
-          placeholder="Title..."
+          placeholder={`${t('Title')}...`}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className="w-full p-2 border border-gray-300 dark:border-gray-950 rounded mb-3 text-sm md:text-base"
         />
         <textarea
-          placeholder="Write your note..."
+          placeholder={`${t('Write your note')}...`}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           className="w-full p-2 border border-gray-300 dark:border-gray-950 rounded text-sm md:text-base h-24"
@@ -47,7 +49,7 @@ function NewNoteModal({ onClose, onSave }) {
           onClick={handleSave}
           className="mt-3 w-full bg-blue-500 dark:bg-slate-900 text-white py-2 rounded hover:bg-blue-600 hover:dark:bg-slate-800 text-sm md:text-base cursor-pointer"
         >
-          Save
+          {t('Save')}
         </button>
       </div>
     </div>
@@ -57,6 +59,7 @@ function NewNoteModal({ onClose, onSave }) {
 
 function NewNoteButton({ onSave }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -65,7 +68,7 @@ function NewNoteButton({ onSave }) {
         className="flex flex-row w-23 md:w-25 lg:w-35 h-7 md:h-8 lg:h-10 pl-1 pr-1 bg-gray-200 dark:bg-gray-700 justify-around items-center rounded-md cursor-pointer"
       >
         <AiOutlinePlus className="text-xs md:text-sm lg:text-lg" />
-        <p className="text-xs md:text-sm lg:text-lg">New Note</p>
+        <p className="text-xs md:text-sm lg:text-lg">{t("New Note")}</p>
       </button>
       {isOpen && <NewNoteModal onClose={() => setIsOpen(false)} onSave={onSave} />}
     </>
@@ -112,6 +115,7 @@ function NotesPage({ sidebarOpen }) {
     const stored = localStorage.getItem('notes');
     return stored ? JSON.parse(stored) : [];
   });
+  const { t } = useTranslation();
 
   const saveNote = (newNote) => {
     const updatedNotes = [newNote, ...notes];
@@ -122,10 +126,10 @@ function NotesPage({ sidebarOpen }) {
   return (
     <div className={`h-full flex flex-col gap-5 text-gray-950 dark:text-gray-200 transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
       <div className="h-max flex flex-row justify-between items-center ">
-        <p className="text-2xl md:text-3xl font-medium">Notes</p>
+        <p className="text-2xl md:text-3xl font-medium">{t("Notes")}</p>
         <NewNoteButton onSave={saveNote} />
       </div>
-      <p className="h-max text-lg md:text-xl font-medium">Recent Notes</p>
+      <p className="h-max text-lg md:text-xl font-medium">{t("Recent Notes")}</p>
       <div className="h-full overflow-y-auto">
         {notes.length > 0 ? (
           notes.map((note) => (
@@ -137,7 +141,7 @@ function NotesPage({ sidebarOpen }) {
             />
           ))
         ) : (
-          <p className="text-sm text-gray-500">No notes found.</p>
+          <p className="text-sm text-gray-500">{t("No notes found")}.</p>
         )}
       </div>
     </div>

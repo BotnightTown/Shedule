@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 
 function WeekType() {
+  const { t } = useTranslation();
   const weekTypes = [
-    { label: "Над рискою", value: 'upper' },
-    { label: "Під рискою", value: 'lower' }
+    { label: `${t("Upper day of week")}`, value: 'upper' },
+    { label: `${t("Lower day of week")}`, value: 'lower' }
   ];
   const [weekType, setWeekType] = useState(() => {
     return localStorage.getItem('weekType') || 'upper';
@@ -17,9 +19,9 @@ function WeekType() {
 
   return (
     <div className="flex flex-row justify-between">
-      <p>Тиждень</p>
+      <p>{t("Week")}</p>
       <select value={weekType} onChange={e => setWeekType(e.target.value)}>
-        <option value="" disabled>Оберіть тиждень</option>
+        <option value="" disabled>{t("Choose week")}</option>
         {weekTypes.map(week => (
           <option key={week.label} value={week.value}>{week.label}</option>
         ))}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
 import axios from "axios";
 
 function Lesson({number, classroom, name, teacher}){
@@ -16,6 +17,7 @@ function Lesson({number, classroom, name, teacher}){
 }
 
 function DaySchedule({dayOfWeek, sidebarOpen, lessons}){
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(true);
   const [schedule, setSchedule] = useState([]);
   const toggleOpen = () => setIsOpen(!isOpen);
@@ -38,12 +40,10 @@ function DaySchedule({dayOfWeek, sidebarOpen, lessons}){
 
   return(
     <div className="w-full flex flex-col items-center">
-      <div className="flex flex-row text-xl md:text-2xl font-medium font-grey-950 m-3 mr-0"
-      >
+      <div className="flex flex-row text-xl md:text-2xl font-medium font-grey-950 m-3 mr-0 cursor-pointer" onClick={toggleOpen}>
         {dayOfWeek}
         <div className="flex item-center justify-center p-2 pr-0">
           <FaChevronDown
-            onClick={toggleOpen}
             className={`cursor-pointer transition-transform duration-800 ${
             isOpen ? "rotate-0" : "rotate-180"
             }`}
@@ -62,14 +62,14 @@ function DaySchedule({dayOfWeek, sidebarOpen, lessons}){
             lessons.map((lesson, idx) => (
               <Lesson
                 key={idx}
-                number={`${lesson.pair_number} пара`}
+                number={`${lesson.pair_number} ${t("Lesson(pair)")}`}
                 classroom={lesson.classroom || "-"}
                 name={lesson.subject || "-"}
                 teacher={lesson.teacher || "-"}
               />
             ))
           ) : (
-            <Lesson number={"-"} name={"Немає занять"} />
+            <Lesson number={"-"} name={`${t("No Lessons")}`} />
           )}
         </div>
       </div>
@@ -78,7 +78,8 @@ function DaySchedule({dayOfWeek, sidebarOpen, lessons}){
 }
 
 function SchedulePage({ sidebarOpen }){
-    const [groupedSchedule, setGroupedSchedule] = useState({});
+  const [groupedSchedule, setGroupedSchedule] = useState({});
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -89,7 +90,6 @@ function SchedulePage({ sidebarOpen }){
         const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
         const data = response.data;
 
-        // Групування за днями тижня
         const grouped = {};
         for (const lesson of data) {
           const day = lesson.day_of_week;
@@ -107,17 +107,19 @@ function SchedulePage({ sidebarOpen }){
   }, []);
 
   const daysOfWeek = [
-    { label: "Понеділок", value: 1 },
-    { label: "Вівторок", value: 2 },
-    { label: "Середа", value: 3 },
-    { label: "Четвер", value: 4 },
-    { label: "Пʼятниця", value: 5 },
-    { label: "Субота", value: 6 },
+    { label: `${t("days.1")}`, value: 1 },
+    { label: `${t("days.2")}`, value: 2 },
+    { label: `${t("days.3")}`, value: 3 },
+    { label: `${t("days.4")}`, value: 4 },
+    { label: `${t("days.5")}`, value: 5 },
+    { label: `${t("days.6")}`, value: 6 },
   ];
 
   return(
     <div className="h-full flex flex-col gap-5 ">
-      <p className={`text-2xl md:text-3xl font-medium transition-all duration-300 ${!sidebarOpen ? 'pl-7' : 'pl-2'}`}>Schedule</p>
+      <p className={`text-2xl md:text-3xl font-medium transition-all duration-300 ${!sidebarOpen ? 'pl-7' : 'pl-2'}`}>
+        {t("Schedule")}
+      </p>
       <div className={`w-full h-screen overflow-y-auto transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
         {daysOfWeek.map(day => (
           <DaySchedule 

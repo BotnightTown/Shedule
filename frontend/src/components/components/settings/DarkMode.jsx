@@ -1,7 +1,9 @@
 import ToggleSwitch from "../ToggleSwitch";
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 
 function DarkMode(){
+  const { t } = useTranslation();
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) return savedTheme;
@@ -20,7 +22,7 @@ function DarkMode(){
 
   return(
     <div className="flex flex-row justify-between">
-      <p>Dark mode</p>
+      <p>{t("Dark Mode")}</p>
       <ToggleSwitch onToggle={() => toggleTheme()} checked={theme === 'dark'} />
     </div>
   )

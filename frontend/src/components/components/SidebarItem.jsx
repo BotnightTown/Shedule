@@ -13,7 +13,7 @@ export default function SidebarItem({ icon, label, to }) {
       <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded-xl shadow-sm">
         {icon}
       </div>
-      <span className="text-gray-700 dark:text-gray-200 text-sm md:text-base lg:text-lg">{label}</span>
+      <span className="w-full text-center text-gray-700 dark:text-gray-200 text-sm md:text-base lg:text-lg truncate">{label}</span>
     </NavLink>
   );
 }

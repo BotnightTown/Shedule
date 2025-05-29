@@ -6,7 +6,6 @@ import TodayPage from "./pages/TodayPage";
 import SchedulePage from "./pages/SchdeulePage";
 import NotesPage from "./pages/NotesPage";
 import SettingsPage from "./pages/SettingsPage";
-import ProfilePage from "./pages/ProfilePage";
 import { Routes, Route } from 'react-router-dom';
 
 function Main({ sidebarOpen, setSidebarOpen }){
@@ -30,14 +29,13 @@ function Main({ sidebarOpen, setSidebarOpen }){
   return(
     <main className="flex-1 overflow-hidden flex flex-row pt-5">
       <Sidebar open={sidebarOpen} className='h-full' />
-      <div className={`h-full transition-all duration-300 ${sidebarOpen ? 'p-5' : 'p-0'} w-full`}>
+      <div className={`w-full h-full transition-all duration-300 ${sidebarOpen ? 'p-5' : 'p-0'}`}>
         <Routes>
           <Route path="/" element={<Welcome sidebarOpen={sidebarOpen} />}/>
           <Route path="/today" element={<TodayPage sidebarOpen={sidebarOpen} />}/>
           <Route path="/schedule" element={<SchedulePage sidebarOpen={sidebarOpen} />}/>
           <Route path="/notes" element={<NotesPage sidebarOpen={sidebarOpen} />}/>
           <Route path="/settings" element={<SettingsPage sidebarOpen={sidebarOpen} />}/>
-          <Route path="/profile" element={<ProfilePage />}/>
         </Routes>
       </div>
     </main>
