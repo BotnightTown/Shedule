@@ -17,7 +17,7 @@ function Subgroup() {
   return (
     <div className="flex flex-row justify-between">
       <p>{t("Subgroup")}</p>
-      <select value={selectedSubgroup} onChange={e => setSelectedSubgroup(e.target.value)}>
+      <select className="p-1 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm" value={selectedSubgroup} onChange={e => setSelectedSubgroup(e.target.value)}>
         <option value="" disabled>{t("Choose subgroup")}</option>
         {subgroups.map(subgroup => (
           <option key={subgroup} value={subgroup}>{subgroup}</option>
