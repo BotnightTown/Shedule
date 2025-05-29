@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
-import axios from 'axios';
 
 function Group() {
   const groups = ["208", "209"];
-  const [selectedGroup, setSelectedGroup] = useState("208");
+  const [selectedGroup, setSelectedGroup] = useState(() => {
+    return localStorage.getItem('selectedGroup') || '208';
+  });
 
   useEffect(() => {
     if (selectedGroup) {
-      
+      localStorage.setItem('selectedGroup', selectedGroup);
     }
   }, [selectedGroup]);
 
   return (
-    <div className="flex flex-row justify-between pt-5">
-      <p>Choose group</p>
+    <div className="flex flex-row justify-between">
+      <p>Група</p>
       <select value={selectedGroup} onChange={e => setSelectedGroup(e.target.value)}>
         <option value="" disabled>Оберіть групу</option>
         {groups.map(group => (

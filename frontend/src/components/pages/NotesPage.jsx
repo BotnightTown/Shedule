@@ -2,7 +2,24 @@ import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { IoChevronForward } from "react-icons/io5";
 
-function NewNoteModal({ onClose }) {
+function NewNoteModal({ onClose, onSave }) {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const handleSave = () => {
+    if (!title.trim() && !content.trim()) return;
+
+    const newNote = {
+      id: Date.now(),
+      title,
+      content,
+      date: new Date().toLocaleDateString('uk-UA'),
+    };
+
+    onSave(newNote);
+    onClose();
+  };
+
   return (
     <div onClick={onClose} className="fixed inset-0 bg-black/10 backdrop-blur-[0.6vw] flex items-center justify-center z-50">
       <div onClick={(e) => e.stopPropagation()} className="bg-white dark:bg-gray-800 p-6 rounded-md shadow-md w-80 sm:w-85 md:w-90 relative">
@@ -16,13 +33,20 @@ function NewNoteModal({ onClose }) {
         <input
           type="text"
           placeholder="Title..."
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           className="w-full p-2 border border-gray-300 dark:border-gray-950 rounded mb-3 text-sm md:text-base"
         />
         <textarea
           placeholder="Write your note..."
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
           className="w-full p-2 border border-gray-300 dark:border-gray-950 rounded text-sm md:text-base h-24"
         />
-        <button onClick={onClose} className="mt-3 w-full bg-blue-500 dark:bg-slate-900 text-white py-2 rounded hover:bg-blue-600 hover:dark:bg-slate-800 text-sm md:text-base cursor-pointer">
+        <button
+          onClick={handleSave}
+          className="mt-3 w-full bg-blue-500 dark:bg-slate-900 text-white py-2 rounded hover:bg-blue-600 hover:dark:bg-slate-800 text-sm md:text-base cursor-pointer"
+        >
           Save
         </button>
       </div>
@@ -30,7 +54,8 @@ function NewNoteModal({ onClose }) {
   );
 }
 
-function NewNoteButton(){
+
+function NewNoteButton({ onSave }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -39,28 +64,29 @@ function NewNoteButton(){
         onClick={() => setIsOpen(true)}
         className="flex flex-row w-23 md:w-25 lg:w-35 h-7 md:h-8 lg:h-10 pl-1 pr-1 bg-gray-200 dark:bg-gray-700 justify-around items-center rounded-md cursor-pointer"
       >
-        <AiOutlinePlus className="text-xs md:text-sm lg:text-lg"/>
+        <AiOutlinePlus className="text-xs md:text-sm lg:text-lg" />
         <p className="text-xs md:text-sm lg:text-lg">New Note</p>
       </button>
-      {isOpen && <NewNoteModal onClose={() => setIsOpen(false)} />}
+      {isOpen && <NewNoteModal onClose={() => setIsOpen(false)} onSave={onSave} />}
     </>
   );
 }
 
-function Note(){
+
+function Note({ title, content, date }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = () => setIsOpen(!isOpen);
 
-  return(
+  return (
     <div className="w-full h-max flex flex-col pr-4 pl-4 shadow-md rounded-md">
       <div className="w-full h-18 md:h-20 flex flex-row justify-between items-center cursor-pointer" onClick={toggleOpen}>
         <div className="w-max flex flex-col gap-2">
-          <p className="text-base md:text-lg font-medium text-gray-900 dark:text-gray-200">Book Report</p>
-          <p className="text-sm md:text-base font-normal text-gray-600 dark:text-gray-300">April 18, 2024</p>
+          <p className="text-base md:text-lg font-medium text-gray-900 dark:text-gray-200">{title}</p>
+          <p className="text-sm md:text-base font-normal text-gray-600 dark:text-gray-300">{date}</p>
         </div>
         <IoChevronForward
-        className={`text-base md:text-lg cursor-pointer transition-transform duration-800 
-          ${ isOpen ? "rotate-90" : "rotate-0" }`} 
+          className={`text-base md:text-lg cursor-pointer transition-transform duration-800 
+            ${isOpen ? "rotate-90" : "rotate-0"}`}
         />
       </div>
       <div
@@ -71,40 +97,52 @@ function Note(){
         `}
       >
         <textarea
-          className="w-full p-1 border border-gray-300 rounded text-sm h-24"
+          className="w-full p-1 border border-gray-300 rounded text-sm h-25"
+          value={content}
           disabled
         />
       </div>
     </div>
-  )
+  );
 }
 
-function NotesPage({ sidebarOpen }){
-  return(
+
+function NotesPage({ sidebarOpen }) {
+  const [notes, setNotes] = useState(() => {
+    const stored = localStorage.getItem('notes');
+    return stored ? JSON.parse(stored) : [];
+  });
+
+  const saveNote = (newNote) => {
+    const updatedNotes = [newNote, ...notes];
+    setNotes(updatedNotes);
+    localStorage.setItem('notes', JSON.stringify(updatedNotes));
+  };
+
+  return (
     <div className={`h-full flex flex-col gap-5 text-gray-950 dark:text-gray-200 transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
       <div className="h-max flex flex-row justify-between items-center ">
         <p className="text-2xl md:text-3xl font-medium">Notes</p>
-        <NewNoteButton />
+        <NewNoteButton onSave={saveNote} />
       </div>
       <p className="h-max text-lg md:text-xl font-medium">Recent Notes</p>
       <div className="h-full overflow-y-auto">
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
+        {notes.length > 0 ? (
+          notes.map((note) => (
+            <Note
+              key={note.id}
+              title={note.title}
+              content={note.content}
+              date={note.date}
+            />
+          ))
+        ) : (
+          <p className="text-sm text-gray-500">No notes found.</p>
+        )}
       </div>
     </div>
-  )
+  );
 }
+
 
 export default NotesPage;

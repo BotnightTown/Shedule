@@ -9,7 +9,9 @@ function TodayPage({ sidebarOpen }) {
   useEffect(() => {
     const fetchTodayLesson = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/today/all');
+        const group = localStorage.getItem('selectedGroup') || '208';
+        const subgroup = localStorage.getItem('selectedSubgroup') || '1';
+        const response = await axios.get(`http://localhost:8000/today/all?group=${group}&subgroup=${subgroup}`);
         setAllTodayLesson(response.data);
       } catch (error) {
         console.error("Error fetching today's lesson:", error);

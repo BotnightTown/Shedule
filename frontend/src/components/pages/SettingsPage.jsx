@@ -1,9 +1,9 @@
 import DarkMode from "../components/settings/DarkMode";
 import Group from "../components/settings/Group";
+import Subgroup from "../components/settings/Subgroup";
+import WeekType from "../components/settings/WeekType";
 
 function SettingsPage({ sidebarOpen }){
-
-  
 
   return(
     <div className={`h-full flex flex-col gap-5 text-gray-950 dark:text-gray-200 transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
@@ -13,9 +13,10 @@ function SettingsPage({ sidebarOpen }){
       <div className="text-base md:text-lg font-normal" >
         <DarkMode />
         <div>
-          <p className="text-lg md:text-xl font-medium">Налаштування групи</p>
+          <p className="text-lg md:text-xl font-medium pt-5">Налаштування групи</p>
           <Group />
-          {/* <button className="bg-gray-700">прийняти</button> */}
+          <Subgroup />
+          <WeekType />
         </div>
       </div>
 

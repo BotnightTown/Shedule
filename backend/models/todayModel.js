@@ -1,6 +1,6 @@
 const db = require('../config/db');
 
-exports.getCurrent = () => {
+exports.getCurrent = (weekType, group, subgroup) => {
   return new Promise((resolve, reject) => {
     const now = new Date();
     const currentTime = now.toTimeString().slice(0, 5) + ':00';
@@ -16,16 +16,16 @@ exports.getCurrent = () => {
       DATE_FORMAT(pt.end_time, '%H:%i') AS end_time
       FROM practice.schedule AS s
       JOIN practice.pair_times AS pt ON s.pair_number = pt.pair_number
-      WHERE s.week_type IN ('all', 'upper')
+      WHERE s.week_type IN ('all', ?)
         AND s.day_of_week = ?
-        AND s.group_number = '208'
-        AND S.subgroup in ('2', 'all')
+        AND s.group_number = ?
+        AND S.subgroup in (?, 'all')
         AND TIME(?) BETWEEN pt.start_time AND pt.end_time
       ORDER BY s.id_subject
       LIMIT 1
     `;
 
-    db.query(sql, [currentDay, currentTime], (err, results) => {
+    db.query(sql, [weekType, currentDay, group, subgroup, currentTime], (err, results) => {
     // db.query(sql, [testDay, testTime], (err, results) => {
       if (err) reject(err);
       else resolve(results);
@@ -33,7 +33,7 @@ exports.getCurrent = () => {
   });
 }
 
-exports.getToday = () => {
+exports.getToday = (weekType, group, subgroup) => {
   return new Promise((resolve, reject) => {
     const now = new Date();
     const days = [0, 1, 2, 3, 4, 5, 6];
@@ -46,14 +46,14 @@ exports.getToday = () => {
         DATE_FORMAT(pt.end_time, '%H:%i') AS end_time
       FROM practice.schedule AS s
       JOIN practice.pair_times AS pt ON s.pair_number = pt.pair_number
-      WHERE s.week_type IN ('all', 'upper')
+      WHERE s.week_type IN ('all', ?)
         AND s.day_of_week = ?
-        AND s.group_number = '208'
-        AND S.subgroup in ('2', 'all')
+        AND s.group_number = ?
+        AND S.subgroup in (?, 'all')
       ORDER BY pt.start_time;
     `;
 
-    db.query(sql, [currentDay], (err, results) => {
+    db.query(sql, [weekType, currentDay, group, subgroup], (err, results) => {
     // db.query(sql, [testDay], (err, results) => {
       if (err) reject(err);
       else resolve(results);

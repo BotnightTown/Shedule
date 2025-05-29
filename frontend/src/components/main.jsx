@@ -14,11 +14,16 @@ function Main({ sidebarOpen, setSidebarOpen }){
   const prevPathRef = useRef(location.pathname);
 
   useEffect(() => {
-    if (prevPathRef.current === "/" && location.pathname !== "/") {
-      setSidebarOpen(false);
-    } else if (location.pathname !== "/") {
+    // if (prevPathRef.current === "/" && location.pathname !== "/") {
+    //   setSidebarOpen(false);
+    // } else if (location.pathname !== "/") {
+    //   setSidebarOpen(true);
+    // }
+    
+    if(location.pathname !== "/"){
       setSidebarOpen(true);
     }
+
     prevPathRef.current = location.pathname;
   }, [location, setSidebarOpen]);
 

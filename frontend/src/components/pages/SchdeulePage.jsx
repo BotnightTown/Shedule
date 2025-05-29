@@ -23,7 +23,10 @@ function DaySchedule({dayOfWeek, sidebarOpen, lessons}){
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/schedule');
+        const group = localStorage.getItem('selectedGroup') || '208';
+        const subgroup = localStorage.getItem('selectedSubgroup') || '1';
+        const weekType = localStorage.getItem('weekType') || 'upper';
+        const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
         setSchedule(response.data);
       } catch (error) {
         console.error("Error fetching schedule:", error);
@@ -80,7 +83,10 @@ function SchedulePage({ sidebarOpen }){
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/schedule');
+        const group = localStorage.getItem('selectedGroup') || '208';
+        const subgroup = localStorage.getItem('selectedSubgroup') || '1';
+        const weekType = localStorage.getItem('weekType') || 'upper';
+        const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
         const data = response.data;
 
         // Групування за днями тижня
