@@ -1,21 +1,45 @@
 import TodayLessons from "../components/TodayLessons";
 import LessonNow from "../components/LessonNow";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-function TodayPage({ sidebarOpen }){
+function TodayPage({ sidebarOpen }) {
+  const [allTodayLesson, setAllTodayLesson] = useState([]);
+
+  useEffect(() => {
+    const fetchTodayLesson = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/today/all');
+        setAllTodayLesson(response.data);
+      } catch (error) {
+        console.error("Error fetching today's lesson:", error);
+      }
+    };
+
+    fetchTodayLesson();
+  }, []);
+
   return (
     <div className={`w-full h-full flex flex-col ${!sidebarOpen ? 'p-5 pt-0' : ''} gap-5 transition-all duration-300`}>
       <p className="text-2xl md:text-3xl font-medium">Today</p>
       <LessonNow />
       <p className="font-semibold text-xl md:text-2xl text-gray-950 dark:text-gray-200">Today's Lessons</p>
-      <div className="shadow-md rounded-md ">
-        <TodayLessons number={"1 пара"} classroom={"1-404"} time={"9:00 - 10:20"} name={"Organisation of DataBase"} teacher={"Кірей К. О."} />
-        <TodayLessons number={"2 пара"} classroom={"1-404"} time={"10:30 - 11:50"} name={"Organisation of DataBase"} teacher={"Кірей К. О."} />
-        <TodayLessons number={"3 пара"} time={"12:30 - 13:50"} name={"English"} />
-        <TodayLessons number={"4 пара"} time={"14:00 - 15:20"} name={"SPA-Technology"} />
-        <TodayLessons number={"5 пара"} name={"-"}/>
+      <div className="shadow-md rounded-md">
+        {allTodayLesson.length === 0
+          ? <p className="p-5">No lessons today</p>
+          : allTodayLesson.map((lesson, index) => (
+              <TodayLessons
+                key={index}
+                number={`${lesson.pair_number} пара`}
+                classroom={lesson.classroom || "-"}
+                time={`${lesson.start_time} - ${lesson.end_time}`}
+                name={lesson.subject || "-"}
+                teacher={lesson.teacher || "-"}
+              />
+            ))}
       </div>
     </div>
-  )
+  );
 }
 
 export default TodayPage;

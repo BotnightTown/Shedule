@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
+import axios from "axios";
 
 function Lesson({number, classroom, name, teacher}){
   return(
@@ -14,9 +15,24 @@ function Lesson({number, classroom, name, teacher}){
   )
 }
 
-function DaySchedule({dayOfWeek, sidebarOpen}){
+function DaySchedule({dayOfWeek, sidebarOpen, lessons}){
   const [isOpen, setIsOpen] = useState(true);
+  const [schedule, setSchedule] = useState([]);
   const toggleOpen = () => setIsOpen(!isOpen);
+
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/schedule');
+        setSchedule(response.data);
+      } catch (error) {
+        console.error("Error fetching schedule:", error);
+      }
+    };
+
+    fetchSchedule();
+  }, []);
+
   return(
     <div className="w-full flex flex-col items-center">
       <div className="flex flex-row text-xl md:text-2xl font-medium font-grey-950 m-3 mr-0"
@@ -39,11 +55,19 @@ function DaySchedule({dayOfWeek, sidebarOpen}){
         `}
       >
         <div className="w-full p-5 pl-1 pr-1 flex flex-col gap-4">
-          <Lesson number={"1 пара"} classroom={"1-403А"} name={"Мова програмування Python"} teacher={"Боровльова С. Ю."}/>
-          <Lesson number={"2 пара"} classroom={"1-403А"} name={"Мова програмування Python"} teacher={"Боровльова С. Ю."}/>
-          <Lesson number={"3 пара"} classroom={"1-403А"} name={"Мова програмування Python"} teacher={"Боровльова С. Ю."}/>
-          <Lesson number={"4 пара"} classroom={"1-403А"} name={"Мова програмування Python"} teacher={"Боровльова С. Ю."}/>
-          <Lesson number={"5 пара"} name={"-"}/>
+          {lessons && lessons.length > 0 ? (
+            lessons.map((lesson, idx) => (
+              <Lesson
+                key={idx}
+                number={`${lesson.pair_number} пара`}
+                classroom={lesson.classroom || "-"}
+                name={lesson.subject || "-"}
+                teacher={lesson.teacher || "-"}
+              />
+            ))
+          ) : (
+            <Lesson number={"-"} name={"Немає занять"} />
+          )}
         </div>
       </div>
     </div>
@@ -51,12 +75,52 @@ function DaySchedule({dayOfWeek, sidebarOpen}){
 }
 
 function SchedulePage({ sidebarOpen }){
+    const [groupedSchedule, setGroupedSchedule] = useState({});
+
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/schedule');
+        const data = response.data;
+
+        // Групування за днями тижня
+        const grouped = {};
+        for (const lesson of data) {
+          const day = lesson.day_of_week;
+          if (!grouped[day]) grouped[day] = [];
+          grouped[day].push(lesson);
+        }
+
+        setGroupedSchedule(grouped);
+      } catch (error) {
+        console.error("Error fetching schedule:", error);
+      }
+    };
+
+    fetchSchedule();
+  }, []);
+
+  const daysOfWeek = [
+    { label: "Понеділок", value: 1 },
+    { label: "Вівторок", value: 2 },
+    { label: "Середа", value: 3 },
+    { label: "Четвер", value: 4 },
+    { label: "Пʼятниця", value: 5 },
+    { label: "Субота", value: 6 },
+  ];
+
   return(
     <div className="h-full flex flex-col gap-5 ">
       <p className={`text-2xl md:text-3xl font-medium transition-all duration-300 ${!sidebarOpen ? 'pl-7' : 'pl-2'}`}>Schedule</p>
       <div className={`w-full h-screen overflow-y-auto transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
-        <DaySchedule dayOfWeek={"Wednesday"}/>
-        <DaySchedule dayOfWeek={"Friday"}/>
+        {daysOfWeek.map(day => (
+          <DaySchedule 
+            key={day.value}
+            dayOfWeek={day.label}
+            lessons={groupedSchedule[day.value] || []}
+            sidebarOpen={sidebarOpen}
+          />
+        ))}
       </div>
     </div>
   )
