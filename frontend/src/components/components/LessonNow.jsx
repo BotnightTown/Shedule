@@ -13,7 +13,8 @@ function LessonNow(){
         const group = localStorage.getItem('selectedGroup') || '208';
         const subgroup = localStorage.getItem('selectedSubgroup') || '1';
         const weekType = localStorage.getItem('weekType') || 'upper';
-        const response = await axios.get(`http://localhost:8000/today/current?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        // const response = await axios.get(`http://localhost:8000/today/current?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        const response = await axios.get(`http://192.168.0.101:8000/today/current?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
         setCurrentLesson(response.data[0]);
       } catch (error) {
         console.error("Error fetching current lesson:", error);

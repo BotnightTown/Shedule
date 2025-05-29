@@ -28,7 +28,8 @@ function DaySchedule({dayOfWeek, sidebarOpen, lessons}){
         const group = localStorage.getItem('selectedGroup') || '208';
         const subgroup = localStorage.getItem('selectedSubgroup') || '1';
         const weekType = localStorage.getItem('weekType') || 'upper';
-        const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        // const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        const response = await axios.get(`http://192.168.1.101:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
         setSchedule(response.data);
       } catch (error) {
         console.error("Error fetching schedule:", error);
@@ -87,7 +88,8 @@ function SchedulePage({ sidebarOpen }){
         const group = localStorage.getItem('selectedGroup') || '208';
         const subgroup = localStorage.getItem('selectedSubgroup') || '1';
         const weekType = localStorage.getItem('weekType') || 'upper';
-        const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        // const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        const response = await axios.get(`http://192.168.0.101:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
         const data = response.data;
 
         const grouped = {};
@@ -117,7 +119,7 @@ function SchedulePage({ sidebarOpen }){
 
   return(
     <div className="h-full flex flex-col gap-5 ">
-      <p className={`text-2xl md:text-3xl font-medium transition-all duration-300 ${!sidebarOpen ? 'pl-7' : 'pl-2'}`}>
+      <p className={`text-xl md:text-2xl font-medium transition-all duration-300 ${!sidebarOpen ? 'pl-7' : 'pl-2'}`}>
         {t("Schedule")}
       </p>
       <div className={`w-full h-screen overflow-y-auto transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
