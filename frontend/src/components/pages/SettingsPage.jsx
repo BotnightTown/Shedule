@@ -13,17 +13,17 @@ function SettingsPage({ sidebarOpen }){
   return(
     <div className={`h-full flex flex-col gap-3 text-gray-950 dark:text-gray-200 transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
       <div className="h-max flex flex-row justify-between items-center ">
-        <p className="text-2xl md:text-3xl font-medium">{t('Settings')}</p>
+        <p className="text-xl md:text-2xl font-medium">{t('Settings')}</p>
       </div>
       <div className="flex flex-col gap-5 text-base md:text-lg font-normal" >
         <div className="flex flex-col gap-2">
-          <p className="text-lg md:text-xl font-medium py-3">{t("View settings")}</p>
+          <p className="text-base md:text-lg font-medium py-3">{t("View settings")}</p>
           <Name />
           <DarkMode />
           <LanguageSwitch />
         </div>
         <div className="flex flex-col gap-2">
-          <p className="text-lg md:text-xl font-medium py-3">{t("Group settings")}</p>
+          <p className="text-base md:text-lg font-medium py-3">{t("Group settings")}</p>
           <Group />
           <Subgroup />
           <WeekType />

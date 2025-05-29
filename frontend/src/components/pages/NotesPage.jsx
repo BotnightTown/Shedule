@@ -31,7 +31,7 @@ function NewNoteModal({ onClose, onSave }) {
         >
           ✕
         </button>
-        <h2 className="text-lg md:text-xl font-semibold mb-4">{t('New Note')}</h2>
+        <h2 className="text-base md:text-lg font-semibold mb-4">{t('New Note')}</h2>
         <input
           type="text"
           placeholder={`${t('Title')}...`}
@@ -68,7 +68,7 @@ function NewNoteButton({ onSave }) {
         className="flex flex-row w-23 md:w-25 lg:w-35 h-7 md:h-8 lg:h-10 pl-1 pr-1 bg-gray-200 dark:bg-gray-700 justify-around items-center rounded-md cursor-pointer"
       >
         <AiOutlinePlus className="text-xs md:text-sm lg:text-lg" />
-        <p className="text-xs md:text-sm lg:text-lg">{t("New Note")}</p>
+        <p className="text-xs md:text-sm lg:text-base">{t("New Note")}</p>
       </button>
       {isOpen && <NewNoteModal onClose={() => setIsOpen(false)} onSave={onSave} />}
     </>
@@ -84,11 +84,11 @@ function Note({ title, content, date }) {
     <div className="w-full h-max flex flex-col pr-4 pl-4 shadow-md rounded-md">
       <div className="w-full h-18 md:h-20 flex flex-row justify-between items-center cursor-pointer" onClick={toggleOpen}>
         <div className="w-max flex flex-col gap-2">
-          <p className="text-base md:text-lg font-medium text-gray-900 dark:text-gray-200">{title}</p>
-          <p className="text-sm md:text-base font-normal text-gray-600 dark:text-gray-300">{date}</p>
+          <p className="text-xm md:text-base font-medium text-gray-900 dark:text-gray-200">{title}</p>
+          <p className="text-xs md:text-sm font-normal text-gray-600 dark:text-gray-300">{date}</p>
         </div>
         <IoChevronForward
-          className={`text-base md:text-lg cursor-pointer transition-transform duration-800 
+          className={`text-xm md:text-base cursor-pointer transition-transform duration-800 
             ${isOpen ? "rotate-90" : "rotate-0"}`}
         />
       </div>
@@ -126,10 +126,10 @@ function NotesPage({ sidebarOpen }) {
   return (
     <div className={`h-full flex flex-col gap-5 text-gray-950 dark:text-gray-200 transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
       <div className="h-max flex flex-row justify-between items-center ">
-        <p className="text-2xl md:text-3xl font-medium">{t("Notes")}</p>
+        <p className="text-lg md:text-xl font-medium">{t("Notes")}</p>
         <NewNoteButton onSave={saveNote} />
       </div>
-      <p className="h-max text-lg md:text-xl font-medium">{t("Recent Notes")}</p>
+      <p className="h-max text-base md:text-lg font-medium">{t("Recent Notes")}</p>
       <div className="h-full overflow-y-auto">
         {notes.length > 0 ? (
           notes.map((note) => (
