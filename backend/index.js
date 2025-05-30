@@ -11,6 +11,6 @@ const scheduleRoutes = require('./routes/scheduleRoutes');
 app.use('/', scheduleRoutes);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, HOST, () => {
+app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} \n`)
 });
