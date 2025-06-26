@@ -5,13 +5,13 @@ import axios from "axios";
 
 function Lesson({number, classroom, name, teacher}){
   return(
-    <div className="w-full flex flex-col gap-2 shadow-md rounded-md p-2">
+    <div className="w-full flex flex-col gap-2 shadow-md rounded-md p-2 bg-cyan-50 dark:bg-slate-800">
       <div className="flex flex-row justify-between">
-        <p className="text-xs md:text-sm font-normal text-gray-600 dark:text-gray-300">{number}</p>
-        <p className="text-xs md:text-sm font-normal text-gray-600 dark:text-gray-300">{classroom}</p>
+        <p className="text-xs md:text-sm font-normal text-cyan-900 dark:text-slate-300">{number}</p>
+        <p className="text-xs md:text-sm font-normal text-cyan-950 dark:text-slate-300">{classroom}</p>
       </div>
       <p className="text-sm md:text-base font-medium">{name}</p>
-      <p className="text-xs md:text-sm font-normal text-gray-600 dark:text-gray-300">{teacher}</p>
+      <p className="text-xs md:text-sm font-normal text-cyan-900 dark:text-slate-300">{teacher}</p>
     </div>
   )
 }
@@ -28,8 +28,9 @@ function DaySchedule({dayOfWeek, sidebarOpen, lessons}){
         const group = localStorage.getItem('selectedGroup') || '208';
         const subgroup = localStorage.getItem('selectedSubgroup') || '1';
         const weekType = localStorage.getItem('weekType') || 'upper';
-        // const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
-        const response = await axios.get(`http://192.168.1.101:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        // const response = await axios.get(`http://192.168.1.102:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        // const response = await axios.get(`http://192.168.43.49:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
         setSchedule(response.data);
       } catch (error) {
         console.error("Error fetching schedule:", error);
@@ -88,8 +89,9 @@ function SchedulePage({ sidebarOpen }){
         const group = localStorage.getItem('selectedGroup') || '208';
         const subgroup = localStorage.getItem('selectedSubgroup') || '1';
         const weekType = localStorage.getItem('weekType') || 'upper';
-        // const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
-        const response = await axios.get(`http://192.168.0.101:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        // const response = await axios.get(`http://192.168.0.102:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        // const response = await axios.get(`http://192.168.43.49:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
         const data = response.data;
 
         const grouped = {};

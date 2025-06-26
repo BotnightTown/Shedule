@@ -20,7 +20,7 @@ function LanguageSwitc() {
           id="language-picker"
           onChange={handleChange}
           value={i18n.language}
-          className="p-1 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm"
+          className="p-1 rounded-md border border-gray-300 dark:border-gray-600 bg-cyan-50 dark:bg-gray-800 text-sm"
         >
           <option value="uk">Українська</option>
           <option value="en">English</option>

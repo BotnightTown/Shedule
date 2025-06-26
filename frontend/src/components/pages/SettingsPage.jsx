@@ -11,7 +11,7 @@ function SettingsPage({ sidebarOpen }){
   const { t } = useTranslation();
 
   return(
-    <div className={`h-full flex flex-col gap-3 text-gray-950 dark:text-gray-200 transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
+    <div className={`h-full flex flex-col gap-3 text-cyan-950 dark:text-gray-200 transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
       <div className="h-max flex flex-row justify-between items-center ">
         <p className="text-xl md:text-2xl font-medium">{t('Settings')}</p>
       </div>
