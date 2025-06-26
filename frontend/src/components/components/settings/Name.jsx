@@ -16,7 +16,7 @@ function Name(){
       <p>{t("Name")}</p>
       <input 
         type="text"
-        className="w-36 p-1 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm"
+        className="w-36 p-1 rounded-md border border-gray-300 dark:border-gray-600 bg-cyan-50 dark:bg-gray-800 text-sm"
         maxLength={16} 
         onChange={e => setName(e.target.value)}
         value={name}

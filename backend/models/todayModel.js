@@ -26,7 +26,7 @@ exports.getCurrent = (weekType, group, subgroup) => {
     `;
 
     db.query(sql, [weekType, currentDay, group, subgroup, currentTime], (err, results) => {
-    // db.query(sql, [testDay, testTime], (err, results) => {
+    // db.query(sql, [weekType, testDay, group, subgroup, testTime], (err, results) => {
       if (err) reject(err);
       else resolve(results);
     });
@@ -54,7 +54,7 @@ exports.getToday = (weekType, group, subgroup) => {
     `;
 
     db.query(sql, [weekType, currentDay, group, subgroup], (err, results) => {
-    // db.query(sql, [testDay], (err, results) => {
+    // db.query(sql, [weekType, testDay, group, subgroup], (err, results) => {
       if (err) reject(err);
       else resolve(results);
     });

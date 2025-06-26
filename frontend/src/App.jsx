@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   return (
-    <div className='h-screen flex flex-col'>
+    <div className='h-screen flex flex-col bg-cyan-100 dark:bg-slate-950 text-cyan-950 dark:text-slate-400'>
       <BrowserRouter>
         <Header onSidebarToggle={handleSidebarToggle} />
         <Main sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
