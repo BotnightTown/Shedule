@@ -22,7 +22,7 @@ function DarkMode(){
 
   return(
     <div className="flex flex-row justify-between">
-      <p>{t("Dark Mode")}</p>
+      <p className="dark:text-slate-300">{t("Dark Mode")}</p>
       <ToggleSwitch onToggle={() => toggleTheme()} checked={theme === 'dark'} />
     </div>
   )

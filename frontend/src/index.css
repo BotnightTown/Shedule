@@ -29,3 +29,21 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(100, 100, 100, 0.5) transparent;
 }
+
+.bg-custom-yellow {
+  @apply bg-[#FEAA26];
+}
+
+.bg-custom-blue{
+  @apply bg-[#02c1eb];
+}
+
+.bg-custom-dark-gray {
+  @apply bg-[#3B424C]
+}
+
+.text-custom-dark-gray {
+  @apply text-[#3B424C]
+}
+
+.bg-custom-light-gray{@apply bg-[#E5E5DD];}

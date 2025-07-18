@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-function LanguageSwitc() {
+function LanguageSwitch() {
   const { i18n } = useTranslation();
 
   const handleChange = (e) => {
@@ -11,7 +11,7 @@ function LanguageSwitc() {
 
   return (
     <div className="flex flex-row justify-between">
-      <p>Мова</p>
+      <p className='dark:text-slate-300'>Мова</p>
       <div className="w-max">
         <label htmlFor="language-picker" className="sr-only">
           Select your language
@@ -20,7 +20,7 @@ function LanguageSwitc() {
           id="language-picker"
           onChange={handleChange}
           value={i18n.language}
-          className="p-1 rounded-md border border-gray-300 dark:border-gray-600 bg-cyan-50 dark:bg-gray-800 text-sm"
+          className="p-1 rounded-md border-2 border-gray-300 dark:border-[#02c1eb] focus:outline focus:outline-[#02c1eb] bg-white dark:bg-slate-800 text-sm cursor-pointer"
         >
           <option value="uk">Українська</option>
           <option value="en">English</option>
@@ -30,4 +30,4 @@ function LanguageSwitc() {
   );
 }
 
-export default LanguageSwitc;
+export default LanguageSwitch;

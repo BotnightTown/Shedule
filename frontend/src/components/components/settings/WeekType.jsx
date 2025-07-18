@@ -20,7 +20,7 @@ function WeekType() {
   return (
     <div className="flex flex-row justify-between">
       <p>{t("Week")}</p>
-      <select className="w-36 p-1 rounded-md border border-gray-300 dark:border-gray-600 bg-cyan-50 dark:bg-gray-800 text-sm" value={weekType} onChange={e => setWeekType(e.target.value)}>
+      <select className="w-36 p-1 rounded-md border-2 border-gray-300 dark:border-[#02c1eb] focus:outline focus:outline-[#02c1eb] bg-white dark:bg-gray-800 text-sm cursor-pointer" value={weekType} onChange={e => setWeekType(e.target.value)}>
         <option value="" disabled>{t("Choose week")}</option>
         {weekTypes.map(week => (
           <option key={week.label} value={week.value}>{week.label}</option>

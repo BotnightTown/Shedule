@@ -1,10 +1,12 @@
-import Header from './components/header';
-import Main from './components/main';
+import { useState, useEffect, useContext } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { UserContext } from './UserContext';
+import Header from './components/header';
+import MainApp from './components/MainApp';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { loading } = useContext(UserContext);
   const handleSidebarToggle = () => setSidebarOpen((prev) => !prev);
 
   useEffect(() => {
@@ -13,18 +15,24 @@ function App() {
 
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
-      themeColorMeta?.setAttribute('content', '#0f172a'); // темний
+      themeColorMeta?.setAttribute('content', '#0f172a');
     } else {
       document.documentElement.classList.remove('dark');
-      themeColorMeta?.setAttribute('content', '#ffffff'); // світлий
+      themeColorMeta?.setAttribute('content', '#ffffff');
     }
   }, []);
 
   return (
-    <div className='h-screen flex flex-col bg-cyan-100 dark:bg-slate-950 text-cyan-950 dark:text-slate-400'>
+    <div className='h-screen flex flex-col bg-white dark:bg-slate-950 text-cyan-950 dark:text-slate-400'>
       <BrowserRouter>
         <Header onSidebarToggle={handleSidebarToggle} />
-        <Main sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        {loading ? (
+          <div className="flex justify-center items-center h-full">
+            <p>Завантаження...</p>
+          </div>
+        ) : (
+          <MainApp sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        )}
       </BrowserRouter>
     </div>
   );
