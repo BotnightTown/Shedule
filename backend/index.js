@@ -1,13 +1,25 @@
-const express = require('express');
-const dotenv = require('dotenv')
-const cors = require('cors');
-dotenv.config();
+import express, { json } from 'express';
+import { config } from 'dotenv';
+import cors from 'cors';
+import session from 'express-session';
+import scheduleRoutes from './routes/scheduleRoutes.js';
+config();
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+app.use(json());
 
-const scheduleRoutes = require('./routes/scheduleRoutes');
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
+
+app.use(session({
+  secret: '123321',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
 app.use('/', scheduleRoutes);
 
 const HOST = process.env.HOST || 'localhost';

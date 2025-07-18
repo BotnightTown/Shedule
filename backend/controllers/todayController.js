@@ -1,23 +1,23 @@
-const Today = require('../models/todayModel');
+import { getCurrent as getCurrentModel, getToday as getTodayModel } from '../models/todayModel.js';
 
-exports.getCurrent = async (req, res) => {
+export const getCurrent = async (req, res) => {
   try{
     const weekType = req.query.weekType || 'upper';
     const group = req.query.group || '208';
     const subgroup = req.query.subgroup || '1';
-    const current = await Today.getCurrent(weekType, group, subgroup);
+    const current = await getCurrentModel(weekType, group, subgroup);
     res.json(current);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 }
 
-exports.getToday = async (req, res) => {
+export const getToday = async (req, res) => {
   try {
     const weekType = req.query.weekType || 'upper';
     const group = req.query.group || '208';
     const subgroup = req.query.subgroup || '1';
-    const today = await Today.getToday(weekType, group, subgroup);
+    const today = await getTodayModel(weekType, group, subgroup);
     res.json(today);
   } catch (err) {
     res.status(500).json({ error: err.message });

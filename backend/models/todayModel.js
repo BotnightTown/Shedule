@@ -1,6 +1,6 @@
-const db = require('../config/db');
+import db from '../config/db.js';
 
-exports.getCurrent = (weekType, group, subgroup) => {
+export const getCurrent = (weekType, group, subgroup) => {
   return new Promise((resolve, reject) => {
     const now = new Date();
     const currentTime = now.toTimeString().slice(0, 5) + ':00';
@@ -25,15 +25,15 @@ exports.getCurrent = (weekType, group, subgroup) => {
       LIMIT 1
     `;
 
-    db.query(sql, [weekType, currentDay, group, subgroup, currentTime], (err, results) => {
-    // db.query(sql, [weekType, testDay, group, subgroup, testTime], (err, results) => {
+    // db.query(sql, [weekType, currentDay, group, subgroup, currentTime], (err, results) => {
+    db.query(sql, [weekType, testDay, group, subgroup, testTime], (err, results) => {
       if (err) reject(err);
       else resolve(results);
     });
   });
 }
 
-exports.getToday = (weekType, group, subgroup) => {
+export const getToday = (weekType, group, subgroup) => {
   return new Promise((resolve, reject) => {
     const now = new Date();
     const days = [0, 1, 2, 3, 4, 5, 6];
@@ -53,8 +53,8 @@ exports.getToday = (weekType, group, subgroup) => {
       ORDER BY pt.start_time;
     `;
 
-    db.query(sql, [weekType, currentDay, group, subgroup], (err, results) => {
-    // db.query(sql, [weekType, testDay, group, subgroup], (err, results) => {
+    // db.query(sql, [weekType, currentDay, group, subgroup], (err, results) => {
+    db.query(sql, [weekType, testDay, group, subgroup], (err, results) => {
       if (err) reject(err);
       else resolve(results);
     });

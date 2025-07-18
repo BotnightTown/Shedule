@@ -1,6 +1,6 @@
-const db = require('../config/db');
+import db from '../config/db.js';
 
-exports.getALL = (weekType, group, subgroup) => {
+export const getALL = (weekType, group, subgroup) => {
   return new Promise((resolve, reject) => {
     const sql = `
       SELECT * 
