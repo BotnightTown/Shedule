@@ -47,7 +47,7 @@ function RegistrationPage(){
           </div>
           <div className="relative border border-slate-300 dark:border-slate-950 rounded-md">
             <span className="absolute -top-3 left-3 bg-white dark:bg-slate-800 px-1 text-sm text-slate-600 dark:text-slate-300">Password</span>
-            <input type="text" 
+            <input type="password" 
               className="w-full h-10 rounded-md pl-2
                 border border-slate-300 dark:border-slate-950
                 hover:outline-1 hover:outline-cyan-400
