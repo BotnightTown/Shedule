@@ -1,5 +1,5 @@
-import { useEffect, useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { NavLink } from "react-router";
 import { useTranslation } from 'react-i18next';
 import { UserContext } from "../../UserContext";
 import { BsCalendar2Event, BsJournalText, BsFileEarmarkText } from "react-icons/bs";
@@ -9,9 +9,14 @@ import ClassroomImg from "../../assets/WelcomePage/Classroom.webp";
 import NotesImg from "../../assets/WelcomePage/Notes.webp";
 import ScheduleImg from "../../assets/WelcomePage/Schedule.webp";
 
+interface WelcomePageProps {
+  sidebarOpen: boolean;
+}
+
 function HelloText(){
-  const [name] = useState(() => localStorage.getItem('name') || 'Student');
-  const { user } = useContext(UserContext);
+  const userContext = useContext(UserContext);
+  if (!userContext) return null
+  const { user } = userContext;
   const { t } = useTranslation();
 
   return(
@@ -22,7 +27,7 @@ function HelloText(){
   )
 }
 
-function Welcome({sidebarOpen}){
+function WelcomePage({sidebarOpen} : WelcomePageProps){
   const { t } = useTranslation();
   
   return(
@@ -61,4 +66,4 @@ function Welcome({sidebarOpen}){
   )
 }
 
-export default Welcome;
+export default WelcomePage;

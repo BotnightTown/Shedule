@@ -1,19 +1,19 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useTranslation } from 'react-i18next';
-import axios from "axios";
 import { UserContext } from "../../../UserContext";
+import axios from "axios";
 
 function Account() {
   const { t } = useTranslation();
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext)!;
   const groups = ["208", "209"];
   const subgroups = ["1", "2"];
 
-  const [selectedUsername, setSelectedUsername] = useState(user?.username || "");
-  const [selectedGroup, setSelectedGroup] = useState(user?.group || "");
-  const [selectedSubgroup, setSelectedSubgroup] = useState(user?.subgroup || "");
+  const [selectedUsername, setSelectedUsername] = useState<string>(user?.username || "");
+  const [selectedGroup, setSelectedGroup] = useState<string>(user?.group || "");
+  const [selectedSubgroup, setSelectedSubgroup] = useState<string>(user?.subgroup || "");
 
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     try {
@@ -24,7 +24,7 @@ function Account() {
         subgroup: selectedSubgroup
       }, { withCredentials: true })
 
-      setUser(prev => ({
+      setUser((prev: string[]) => ({
         ...prev,
         username: selectedUsername,
         group: selectedGroup,

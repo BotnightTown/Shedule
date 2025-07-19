@@ -1,19 +1,26 @@
 import { useEffect, useRef } from "react";
 import { useContext } from "react";
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router';
 import { UserContext } from "../UserContext"
 import Sidebar from "./Sidebar";
-import Welcome from "./pages/Welcome";
-import TodayPage from "./pages/TodayPage";
-import SchedulePage from "./pages/SchdeulePage";
-import NotesPage from "./pages/NotesPage";
-import SettingsPage from "./pages/SettingsPage";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
-import ResetPasswordPage from "./pages/ResetPassword";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import WelcomePage from "./pages/WelcomePage";
+import TodayPage from "./pages/TodayPage";
+import SchedulePage from "./pages/SchedulePage";
+import NotesPage from "./pages/NotesPage";
+import SettingsPage from "./pages/SettingsPage";
 
-function Main({ sidebarOpen, setSidebarOpen }){
-  const { user, loading } = useContext(UserContext);
+interface MainAppProps {
+  sidebarOpen : boolean;
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function MainApp ({ sidebarOpen, setSidebarOpen } : MainAppProps){
+  const userContext = useContext(UserContext);
+  if (!userContext) return null
+  const { user } = userContext;
   const location = useLocation();
   const prevPathRef = useRef(location.pathname);
 
@@ -24,16 +31,15 @@ function Main({ sidebarOpen, setSidebarOpen }){
 
     prevPathRef.current = location.pathname;
   }, [location, setSidebarOpen]);
-
-
+  
   return(
     <main className="flex-1 overflow-hidden flex flex-row pt-5">
       {user ? (
         <>
-          <Sidebar open={sidebarOpen} className='h-full' />
+          <Sidebar open={sidebarOpen} />
           <div className={`w-full h-full transition-all duration-300 ${sidebarOpen ? 'p-5' : 'p-0'}`}>
             <Routes>
-              <Route path="/" element={<Welcome sidebarOpen={sidebarOpen} />}/>
+              <Route path="/" element={<WelcomePage sidebarOpen={sidebarOpen} />}/>
               <Route path="/today" element={<TodayPage sidebarOpen={sidebarOpen} />}/>
               <Route path="/schedule" element={<SchedulePage sidebarOpen={sidebarOpen} />}/>
               <Route path="/notes" element={<NotesPage sidebarOpen={sidebarOpen} />}/>
@@ -56,4 +62,4 @@ function Main({ sidebarOpen, setSidebarOpen }){
   )
 }
 
-export default Main;
+export default MainApp;

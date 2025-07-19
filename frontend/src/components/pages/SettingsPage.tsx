@@ -1,17 +1,19 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useTranslation } from 'react-i18next';
-import axios from "axios";
 import { UserContext } from '../../UserContext';
+import axios from "axios";
 import DarkMode from "../components/settings/DarkMode";
 import Account from "../components/settings/Account";
-import Subgroup from "../components/settings/Subgroup";
 import WeekType from "../components/settings/WeekType";
-import Name from "../components/settings/Name";
 import LanguageSwitch from "../components/settings/LanguageSwitch";
 
-function SettingsPage({ sidebarOpen }){
-  const { setUser } = useContext(UserContext);
+interface SettingsPageProps{
+  sidebarOpen: boolean;
+}
+
+function SettingsPage({ sidebarOpen }: SettingsPageProps){
+  const { setUser } = useContext(UserContext)!;
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -33,7 +35,6 @@ function SettingsPage({ sidebarOpen }){
       <div className="flex flex-col gap-5 text-base md:text-lg font-normal" >
         <div className="flex flex-col gap-2">
           <p className="text-base md:text-lg font-medium py-3 dark:text-slate-300">{t("View settings")}</p>
-          {/* <Name /> */}
           <DarkMode />
           <LanguageSwitch />
         </div>

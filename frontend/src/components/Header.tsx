@@ -1,10 +1,16 @@
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
 import { GrTextAlignLeft } from "react-icons/gr";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 
-function Header({ onSidebarToggle }){
-  const { user } = useContext(UserContext);
+interface HeaderProps {
+  onSidebarToggle: () => void;
+}
+
+function Header ({ onSidebarToggle } : HeaderProps){
+  const userContext = useContext(UserContext);
+  if (!userContext) return null
+  const { user } = userContext;
 
   return(
     <header className="h-max flex flex-row justify-start items-center p-4 text-2xl lg:text-3xl bg-custom-blue text-white">
@@ -14,4 +20,4 @@ function Header({ onSidebarToggle }){
   )
 }
 
-export default Header;
+export default Header

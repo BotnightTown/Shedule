@@ -1,7 +1,14 @@
-import { NavLink } from "react-router-dom";
+import type { JSX } from "react";
+import { NavLink } from "react-router";
 
-export default function SidebarItem({ icon, label, to }) {
-  return (
+interface SidebarItemProps {
+  icon: JSX.Element;
+  label:  string;
+  to: string;
+}
+
+function SidebarItem({icon, label, to} : SidebarItemProps){
+  return(
     <NavLink
       to={to}
       className={({ isActive }) =>
@@ -15,5 +22,7 @@ export default function SidebarItem({ icon, label, to }) {
       </div>
       <span className={`w-full text-center font-base dark:text-white text-sm md:text-base lg:text-lg truncate`}>{label}</span>
     </NavLink>
-  );
+  )
 }
+
+export default SidebarItem;

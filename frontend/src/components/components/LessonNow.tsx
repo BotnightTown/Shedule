@@ -3,22 +3,29 @@ import { useState, useEffect, useContext } from "react";
 import { useTranslation } from 'react-i18next';
 import { UserContext } from "../../UserContext";
 
+type LessonType = {
+  day_of_week: string;
+  start_time: string;
+  end_time: string;
+  subject: string;
+  teacher: string;
+};
+
+
 function LessonNow(){
-  const [currentLesson, setCurrentLesson] = useState(null);
-  const { user } = useContext(UserContext);
+  const [currentLesson, setCurrentLesson] = useState<LessonType | null>(null);
+  const userContext = useContext(UserContext);
+  if (!userContext) return null
+  const { user } = userContext;
   const { t } = useTranslation();
-  
+
   useEffect(() => {
     const fetchLessonNow = async () => {
       try {
-        // const group = localStorage.getItem('selectedGroup') || '208';
-        // const subgroup = localStorage.getItem('selectedSubgroup') || '1';
         const group = user?.group;
         const subgroup = user?.subgroup;
         const weekType = localStorage.getItem('weekType') || 'upper';
         const response = await axios.get(`http://localhost:8000/today/current?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
-        // const response = await axios.get(`http://192.168.0.102:8000/today/current?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
-        // const response = await axios.get(`http://192.168.43.49:8000/today/current?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
         setCurrentLesson(response.data[0]);
       } catch (error) {
         console.error("Error fetching current lesson:", error);

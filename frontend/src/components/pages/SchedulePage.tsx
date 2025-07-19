@@ -4,7 +4,33 @@ import { useTranslation } from 'react-i18next';
 import axios from "axios";
 import { UserContext } from "../../UserContext";
 
-function Lesson({number, classroom, name, teacher}){
+interface LessonProps {
+  number: string;
+  classroom: string;
+  name: string;
+  teacher: string;
+}
+
+interface Lesson {
+  id?: number;
+  pair_number: number;
+  classroom?: string;
+  subject?: string;
+  teacher?: string;
+  day_of_week: number;
+}
+
+interface DayScheduleProps{
+  dayOfWeek: string;
+  sidebarOpen: boolean;
+  lessons: Lesson[];
+}
+
+interface SchedulePageProps{
+  sidebarOpen: boolean;
+}
+
+function Lesson({number, classroom, name, teacher} : LessonProps){
   return(
     <div className="w-full flex flex-col gap-2 shadow-md rounded-md p-2 bg-[#02c1eb] dark:bg-slate-800 dark:border-2 dark:border-[#02c1eb]">
       <div className="flex flex-row justify-between">
@@ -17,9 +43,9 @@ function Lesson({number, classroom, name, teacher}){
   )
 }
 
-function DaySchedule({dayOfWeek, sidebarOpen, lessons}){
+function DaySchedule({dayOfWeek, sidebarOpen, lessons} : DayScheduleProps){
   const { t } = useTranslation();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const toggleOpen = () => setIsOpen(!isOpen);
 
   return(
@@ -53,7 +79,7 @@ function DaySchedule({dayOfWeek, sidebarOpen, lessons}){
               />
             ))
           ) : (
-            <Lesson number={"-"} name={`${t("No Lessons")}`} />
+            <Lesson number={"-"} name={`${t("No Lessons")}`} classroom={""} teacher={""} />
           )}
         </div>
       </div>
@@ -61,25 +87,23 @@ function DaySchedule({dayOfWeek, sidebarOpen, lessons}){
   )
 }
 
-function SchedulePage({ sidebarOpen }){
-  const [groupedSchedule, setGroupedSchedule] = useState({});
-  const { user } = useContext(UserContext);
+function SchedulePage({ sidebarOpen }: SchedulePageProps){
+  const [groupedSchedule, setGroupedSchedule] = useState<Record<number, Lesson[]>>({});
+  const userContext = useContext(UserContext);
+  if (!userContext) return null
+  const { user } = userContext;
   const { t } = useTranslation();
 
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        // const group = localStorage.getItem('selectedGroup') || '208';
-        // const subgroup = localStorage.getItem('selectedSubgroup') || '1';
         const group = user?.group;
         const subgroup = user?.subgroup;
         const weekType = localStorage.getItem('weekType') || 'upper';
         const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
-        // const response = await axios.get(`http://192.168.0.102:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
-        // const response = await axios.get(`http://192.168.43.49:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
         const data = response.data;
 
-        const grouped = {};
+        const grouped : any = {};
         for (const lesson of data) {
           const day = lesson.day_of_week;
           if (!grouped[day]) grouped[day] = [];

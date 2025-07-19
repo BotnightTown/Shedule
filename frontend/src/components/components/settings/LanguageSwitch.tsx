@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 function LanguageSwitch() {
   const { i18n } = useTranslation();
 
-  const handleChange = (e) => {
+  const handleChange = (e:React.ChangeEvent<HTMLSelectElement>) => {
     const selectedLang = e.target.value;
     i18n.changeLanguage(selectedLang);
     localStorage.setItem('lang', selectedLang);

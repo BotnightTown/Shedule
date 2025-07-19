@@ -3,7 +3,11 @@ import { BsCalendar2Event, BsJournalText, BsFileEarmarkText } from "react-icons/
 import { GoGear } from "react-icons/go";
 import { useTranslation } from 'react-i18next';
 
-function Sidebar({ open }){
+interface SidebarProps{
+  open: boolean;
+}
+
+function Sidebar({open} : SidebarProps){
   const { t } = useTranslation();
 
   return (

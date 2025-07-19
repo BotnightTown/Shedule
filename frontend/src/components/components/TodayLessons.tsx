@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { IoChevronForward } from "react-icons/io5";
 
-function TodayLessons({number, classroom, time, name, teacher}){
+interface TodayLessonsProps{
+  number: string;
+  classroom: string;
+  time: string;
+  name: string;
+  teacher: string;
+}
+
+function TodayLessons({number, classroom, time, name, teacher}: TodayLessonsProps){
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = () => setIsOpen(!isOpen);
 

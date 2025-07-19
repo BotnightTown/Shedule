@@ -5,21 +5,33 @@ import { UserContext } from "../../UserContext";
 import TodayLessons from "../components/TodayLessons";
 import LessonNow from "../components/LessonNow";
 
-function TodayPage({ sidebarOpen }) {
-  const [allTodayLesson, setAllTodayLesson] = useState([]);
-  const { user } = useContext(UserContext);
+interface TodayPageProps {
+  sidebarOpen: boolean;
+}
+
+interface Lesson {
+  pair_number: number;
+  subject: string;
+  classroom: string;
+  start_time: string;
+  end_time: string;
+  teacher: string;
+}
+
+
+function TodayPage({ sidebarOpen } : TodayPageProps){
+  const [allTodayLesson, setAllTodayLesson] = useState<Lesson[]>([]);
+  const userContext = useContext(UserContext);
+  if (!userContext) return null
+  const { user } = userContext;
   const { t } = useTranslation();
 
   useEffect(() => {
     const fetchTodayLesson = async () => {
       try {
-        // const group = localStorage.getItem('selectedGroup') || '208';
-        // const subgroup = localStorage.getItem('selectedSubgroup') || '1';
         const group = user?.group;
         const subgroup = user?.subgroup;
         const response = await axios.get(`http://localhost:8000/today/all?group=${group}&subgroup=${subgroup}`);
-        // const response = await axios.get(`http://192.168.0.102:8000/today/all?group=${group}&subgroup=${subgroup}`);
-        // const response = await axios.get(`http://192.168.43.49:8000/today/all?group=${group}&subgroup=${subgroup}`);
         setAllTodayLesson(response.data);
       } catch (error) {
         console.error("Error fetching today's lesson:", error);

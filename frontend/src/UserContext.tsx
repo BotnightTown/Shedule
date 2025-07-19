@@ -1,11 +1,18 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, type Dispatch, type SetStateAction,  } from "react";
 import axios from "axios";
 
-export const UserContext = createContext();
+interface UserContextType {
+  user: any;
+  setUser: Dispatch<SetStateAction<any>>;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+}
 
-export function UserProvider({ children }) {
+export const UserContext = createContext<UserContextType | null>(null);
+
+export function UserProvider({ children }: any) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchUser = async () => {

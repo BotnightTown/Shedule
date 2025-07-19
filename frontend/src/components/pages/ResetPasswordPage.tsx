@@ -1,19 +1,20 @@
 import { useState } from "react"
-import { Link } from "react-router-dom";
-import axios from 'axios';
+import { Link } from "react-router";
+import axios, { AxiosError } from 'axios';
 
-function ResetPassword(){
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState(null);
+function ResetPasswordPage(){
+  const [email, setEmail] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleReset = async () => {
     setError(null);
     try {
       await axios.post("http://localhost:8000/register", {
-        username, email, password
+        
       })
     } catch (err) {
-      setError(err.response?.data?.error || "Помилка скидання паролю");
+      const error = err as AxiosError<{ err: string }>;
+      setError(error.response?.data?.err || "Помилка скидання паролю");
     }
   }
 
@@ -49,4 +50,4 @@ function ResetPassword(){
   )
 }
 
-export default ResetPassword
+export default ResetPasswordPage;

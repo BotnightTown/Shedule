@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from 'axios';
+import { Link } from "react-router";
+import axios, { AxiosError } from 'axios';
 
 function RegistrationPage(){
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const handleRegister = async () => {
     setError(null);
@@ -18,11 +18,12 @@ function RegistrationPage(){
       })
       setSuccess("Реєстрація успішна!");
     } catch (err) {
-      setError(err.response?.data?.error || "Помилка реєстрації");
+      const error = err as AxiosError<{ err: string }>;
+      setError(error.response?.data?.err || "Помилка реєстрації");
     }
   }
 
-  return(
+    return(
     <div className="w-full h-full p-5 pt-0 flex items-start justify-center">
       <div className="w-full h-max p-5 flex flex-col gap-3 bg-white dark:bg-slate-800 rounded-xl border-2 border-[#02c1eb]">
         <p className="text-2xl font-semibold dark:text-slate-300">Registration</p>
@@ -62,6 +63,7 @@ function RegistrationPage(){
       </div>
     </div>
   )
+
 }
 
 export default RegistrationPage;

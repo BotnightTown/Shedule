@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router";
+import axios, { AxiosError } from "axios";
 import { useContext } from "react";
 import { UserContext } from "../../UserContext";
 
 function LoginPage(){
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const { setUser } = useContext(UserContext);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+  const { setUser } = useContext(UserContext)!;
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -19,8 +19,9 @@ function LoginPage(){
       setUser(res.data.user);
       navigate("/");
     } catch (err) {
-      setError(err.response?.data?.err || "Неправильний логін або пароль");
-      console.log(err.response?.data);
+      const error = err as AxiosError<{ err: string }>;
+      setError(error.response?.data?.err || "Неправильний логін або пароль");
+      console.log(error.response?.data);
     }
   }
 
@@ -64,6 +65,7 @@ function LoginPage(){
       </div>
     </div>
   )
+
 }
 
 export default LoginPage;

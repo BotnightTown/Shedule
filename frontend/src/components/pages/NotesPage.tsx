@@ -4,7 +4,31 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { IoChevronForward } from "react-icons/io5";
 import { useTranslation } from 'react-i18next';
 
-function NewNoteModal({ onClose, onSave }) {
+interface NewNoteModalProps {
+  onClose: () => void;
+  onSave: () => Promise<void>;
+}
+interface NewNoteButtonProps{
+  onSave: () => Promise<void>;
+}
+interface NoteProps{
+  id: number;
+  title: string;
+  content: string;
+  date: Date;
+  onDelete: (id: number) => void;
+}
+interface NotesPageProps{
+  sidebarOpen: boolean;
+}
+interface NoteType {
+  id_note: number;
+  title: string;
+  content: string;
+  date: Date;
+}
+
+function NewNoteModal({ onClose, onSave } : NewNoteModalProps) {
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -13,7 +37,7 @@ function NewNoteModal({ onClose, onSave }) {
     if (!title.trim() && !content.trim()) return;
 
     try {
-      const newNote = await axios.post('http://localhost:8000/notes/create', { title, content}, {withCredentials: true });
+      // const newNote = await axios.post('http://localhost:8000/notes/create', { title, content}, {withCredentials: true });
       await onSave();
     } catch (error){
       console.error("Error making note:", error);
@@ -56,8 +80,7 @@ function NewNoteModal({ onClose, onSave }) {
   );
 }
 
-
-function NewNoteButton({ onSave }) {
+function NewNoteButton({ onSave }: NewNoteButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
 
@@ -76,14 +99,13 @@ function NewNoteButton({ onSave }) {
         onSave={async () => {
           await onSave(); 
           setIsOpen(false);
-          }} 
+        }} 
       />}
     </>
   );
 }
 
-
-function Note({ id, title, content, date, onDelete }) {
+function Note({ id, title, content, date, onDelete }: NoteProps) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = () => setIsOpen(!isOpen);
   const { t } = useTranslation();
@@ -132,15 +154,13 @@ function Note({ id, title, content, date, onDelete }) {
   );
 }
 
-
-function NotesPage({ sidebarOpen }) {
-  const [notes, setNotes] = useState([])
+function NotesPage({ sidebarOpen }: NotesPageProps) {
+  const [notes, setNotes] = useState<NoteType[]>([])
   const { t } = useTranslation();
 
   const fetchNotes = async () => {
     try {
       const response = await axios.get('http://localhost:8000/notes/all', { withCredentials: true });
-        // console.log(response.data);
       setNotes(response.data);
     } catch (err) {
       console.error("Error fetching schedule:", err)
@@ -155,7 +175,7 @@ function NotesPage({ sidebarOpen }) {
     await fetchNotes();
   };
 
-  const deleteNote = async (id) => {
+  const deleteNote = async (id: number) => {
     try {
       await axios.delete(`http://localhost:8000/notes/${id}`, { withCredentials: true });
       // const updatedNotes = notes.filter(note => note.id !== id);
@@ -193,6 +213,5 @@ function NotesPage({ sidebarOpen }) {
     </div>
   );
 }
-
 
 export default NotesPage;

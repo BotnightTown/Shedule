@@ -1,4 +1,9 @@
-function ToggleSwitch({ checked, onToggle }) {
+interface ToggleSwitchProps{
+  checked: boolean;
+  onToggle: () => void;
+}
+
+function ToggleSwitch({ checked, onToggle }: ToggleSwitchProps) {
 
   return (
     <div
