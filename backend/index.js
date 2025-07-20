@@ -3,6 +3,7 @@ import { config } from 'dotenv';
 import cors from 'cors';
 import session from 'express-session';
 import scheduleRoutes from './routes/scheduleRoutes.js';
+import authRoutes from "./routes/authRoutes.js";
 config();
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(session({
 }));
 
 app.use('/', scheduleRoutes);
+app.use("/auth", authRoutes);
 
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3000;

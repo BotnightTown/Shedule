@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { UserContext } from './UserContext';
 import Header from './components/Header';
 import MainApp from './components/MainApp';
+import { useTranslation } from 'react-i18next';
 
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
   const userContext = useContext(UserContext);
   if (!userContext) return null
   const { loading } = userContext;
+  const { t } = useTranslation();
   const handleSidebarToggle = () => setSidebarOpen((prev) => !prev);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ function App() {
       <Header onSidebarToggle={handleSidebarToggle} />
       {loading ? (
         <div className="flex justify-center items-center h-full">
-          <p>Завантаження...</p>
+          <p>{t("Loading")}...</p>
         </div>
       ) : (
         <MainApp sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />

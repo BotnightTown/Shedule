@@ -67,7 +67,7 @@ function Account() {
           ))}
         </select>
       </div>
-      <button className="py-1 bg-[#02c1eb] text-cyan-50 hover:bg-cyan-500 transition-all duration-300 rounded-sm shadow-md cursor-pointer" onClick={handleSubmit}>Змінити</button>
+      <button className="py-1 bg-[#02c1eb] text-cyan-50 hover:bg-cyan-500 transition-all duration-300 rounded-sm shadow-md cursor-pointer" onClick={handleSubmit}>{t("Change")}</button>
       {status && <p className="text-sm mt-1">{status}</p>}
     </div>
   );

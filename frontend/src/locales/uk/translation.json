@@ -8,6 +8,8 @@
   "Lesson(pair)" : "пара",
   "View settings" : "Налаштування вигляду",
   "Group settings" : "Налаштування групи",
+  "Schedule settings" : "Налаштування розкладу",
+  "Account settings" : "Налаштування акаунта",
   "No Lessons" : "Немає занять",
   "days": {
     "0": "Неділя",
@@ -40,5 +42,18 @@
   "Title" : "Назва",
   "Write your note" : "Напишіть свою нотатку",
   "Edit" : "Редагувати",
-  "Delete" : "Видалити"
+  "Delete" : "Видалити",
+  "Login" : "Увійти",
+  "Logout" : "Вийти з акаунту",
+  "Loading" : "Завантаження",
+  "Reset password" : "Відновити пароль",
+  "Enter email" : "Введіть email уведений при реєстрації.",
+  "Submit" : "Підтвердити",
+  "Registration" : "Реєстрація",
+  "Registration2" : "Зареєструватися",
+  "Username" : "Ім'я користувача",
+  "Password" : "Пароль",
+  "Already have an account" : "Вже маєте акаунт?",
+  "Input new password" : "Введіть новий пароль",
+  "Change" : "Змінити"
 }

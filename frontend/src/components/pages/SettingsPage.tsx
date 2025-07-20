@@ -39,14 +39,14 @@ function SettingsPage({ sidebarOpen }: SettingsPageProps){
           <LanguageSwitch />
         </div>
         <div className="flex flex-col gap-2">
-          <p className="text-base md:text-lg font-medium py-3 dark:text-slate-300">Налаштування розкладу</p>
+          <p className="text-base md:text-lg font-medium py-3 dark:text-slate-300">{t("Schedule settings")}</p>
           <WeekType />
         </div>
         <div className="flex flex-col gap-2">
-          <p className="text-base md:text-lg font-medium py-3 dark:text-slate-300">Налаштування акаунта</p>
+          <p className="text-base md:text-lg font-medium py-3 dark:text-slate-300">{t("Account settings")}</p>
           <Account />
         </div>
-        <button onClick={handleLogout} className="text-red-500 text-shadow-sm cursor-pointer">Вийти з акаунту</button>
+        <button onClick={handleLogout} className="text-red-500 text-shadow-sm cursor-pointer">{t("Logout")}</button>
       </div>
     </div>
   )

@@ -5,7 +5,9 @@ export const register = async (req, res) => {
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
-    const register = await registerUser(username, email, password);
+    const group = req.body.selectedGroup;
+    const subgroup = req.body.selectedSubgroup;
+    const register = await registerUser(username, email, password, group, subgroup);
     res.json(register);
   } catch (err) {
     res.status(500).json({error: err.message })

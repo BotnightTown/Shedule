@@ -1,15 +1,15 @@
 import db from '../config/db.js';
 import bcrypt from 'bcrypt';
 
-export const register = (username, email, password) => {
+export const register = (username, email, password, group, subgroup) => {
   return new Promise(async (resolve, reject) => {
     try{
       const hashedPassword = await bcrypt.hash(password, 10);
       const sql = `
-      INSERT INTO users (username, email, password) VALUES (?, ?, ?)
+      INSERT INTO users (username, email, password, \`group\`, subgroup) VALUES (?, ?, ?, ?, ?)
       `;
 
-      db.query(sql, [username, email, hashedPassword], (err, results) => {
+      db.query(sql, [username, email, hashedPassword, group, subgroup], (err, results) => {
         if (err) reject(err);
         else resolve(results);
       })
@@ -66,3 +66,24 @@ export const updateInfo = (username, group, subgroup, id_user) => {
     });
   });
 }
+
+export const findUserByEmail = (email) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM users WHERE email = ?`;
+    db.query(sql, [email], (err, results) => {
+      if (err) return reject(err);
+      if (results.length === 0) return resolve(null);
+      resolve(results[0]);
+    });
+  });
+};
+
+export const updateUserPasswordById = (id_user, newHashedPassword) => {
+  return new Promise((resolve, reject) => {
+    const sql = `UPDATE users SET password = ? WHERE id_user = ?`;
+    db.query(sql, [newHashedPassword, id_user], (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};

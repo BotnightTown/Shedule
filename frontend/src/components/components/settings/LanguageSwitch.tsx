@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 function LanguageSwitch() {
   const { i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const handleChange = (e:React.ChangeEvent<HTMLSelectElement>) => {
     const selectedLang = e.target.value;
@@ -11,10 +12,10 @@ function LanguageSwitch() {
 
   return (
     <div className="flex flex-row justify-between">
-      <p className='dark:text-slate-300'>Мова</p>
+      <p className='dark:text-slate-300'>{t("Language")}</p>
       <div className="w-max">
         <label htmlFor="language-picker" className="sr-only">
-          Select your language
+          {t("Select language")}
         </label>
         <select
           id="language-picker"

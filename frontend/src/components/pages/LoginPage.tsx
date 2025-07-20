@@ -59,7 +59,7 @@ function LoginPage(){
         <div className="flex flex-col gap-2">
           <button className="w-full h-10 bg-[#02c1eb] text-cyan-50 d rounded-sm shadow-md cursor-pointer focus:outline-[#02c1eb]"
           onClick={handleLogin}>Log in</button>
-          <Link className="pl-3 cursor-pointer text-sm dark:text-slate-300" to="/reset_password">Забули пароль?</Link>
+          <Link className="pl-3 cursor-pointer text-sm dark:text-slate-300" to="/reset_request">Забули пароль?</Link>
         </div>
         {error && <p className="text-red-600">{error}</p>}
       </div>

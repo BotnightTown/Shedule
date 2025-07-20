@@ -8,6 +8,8 @@
   "Lesson(pair)" : "Lesson",
   "View settings" : "View settings",
   "Group settings" : "Group settings",
+  "Schedule settings" : "Schedule settings",
+  "Account settings" : "Account settings",
   "No Lessons" : "No Lessons",
     "days": {
     "0": "Sunday",
@@ -40,5 +42,18 @@
   "Title" : "Title",
   "Write your note" : "Write your note",
   "Edit" : "Edit",
-  "Delete" : "Delete"
+  "Delete" : "Delete",
+  "Login" : "Login",
+  "Logout" : "Logout",
+  "Loading" : "Loading",
+  "Reset password" : "Reset password",
+  "Enter email" : "Enter the email you entered during registration.",
+  "Submit" : "Submit",
+  "Registration" : "Registration",
+  "Registration2" : "Registration",
+  "Username" : "Username",
+  "Password" : "Password",
+  "Already have an account" : "Already have an account",
+  "Input new password" : "Input new password",
+  "Change" : "Change"
 }
