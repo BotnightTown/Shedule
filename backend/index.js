@@ -4,6 +4,9 @@ import cors from 'cors';
 import session from 'express-session';
 import scheduleRoutes from './routes/scheduleRoutes.js';
 import authRoutes from "./routes/authRoutes.js";
+import notesRoutes from "./routes/notesRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+
 config();
 
 const app = express();
@@ -23,6 +26,8 @@ app.use(session({
 
 app.use('/', scheduleRoutes);
 app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
+app.use("/notes", notesRoutes)
 
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3000;

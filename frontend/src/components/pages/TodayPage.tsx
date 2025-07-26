@@ -42,7 +42,7 @@ function TodayPage({ sidebarOpen } : TodayPageProps){
   }, []);
 
   return (
-    <div className={`w-full h-full flex flex-col ${!sidebarOpen ? 'p-5 pt-0' : ''} gap-5 transition-all duration-300 text-cyan-950 dark:text-slate-200`}>
+    <div className={`w-full h-full flex flex-col ${!sidebarOpen && "p-5"} gap-5 transition-all duration-300 text-cyan-950 dark:text-slate-200 overflow-y-auto`}>
       <p className="text-xl md:text-2xl font-medium dark:text-slate-300">{t('Today')}</p>
       <LessonNow />
       <p className="font-semibold text-lg md:text-xl text-cyan-950 dark:text-slate-300">{t("Today's Lessons")}</p>

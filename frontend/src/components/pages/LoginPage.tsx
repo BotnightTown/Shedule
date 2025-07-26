@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
+import { useTranslation } from 'react-i18next';
 import axios, { AxiosError } from "axios";
 import { useContext } from "react";
 import { UserContext } from "../../UserContext";
 
 function LoginPage(){
+  const { t } = useTranslation();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -14,8 +16,8 @@ function LoginPage(){
   const handleLogin = async () => {
     setError(null);
     try {
-      await axios.post("http://localhost:8000/login", {username, password}, {withCredentials: true});
-      const res = await axios.get("http://localhost:8000/profile", {withCredentials: true});
+      await axios.post("http://localhost:8000/user/login", {username, password}, {withCredentials: true});
+      const res = await axios.get("http://localhost:8000/user/profile", {withCredentials: true});
       setUser(res.data.user);
       navigate("/");
     } catch (err) {
@@ -28,10 +30,10 @@ function LoginPage(){
   return(
     <div className="w-full h-full p-5 pt-0 flex items-start justify-center">
       <div className="w-full h-max p-5 flex flex-col gap-3 bg-white dark:bg-slate-800 rounded-xl border-2 border-[#02c1eb]">
-        <p className="text-2xl font-semibold dark:text-slate-300">Login</p>
+        <h2 className="text-2xl font-semibold dark:text-slate-300">{t("Login")}</h2>
         <div className="flex flex-col gap-5 pt-1">
           <div className="relative border border-slate-300 dark:border-slate-950 rounded-md">
-            <span className="absolute -top-3 left-3 bg-white dark:bg-slate-800 px-1 text-sm text-slate-600 dark:text-slate-300">Username</span>
+            <span className="absolute -top-3 left-3 bg-white dark:bg-slate-800 px-1 text-sm text-slate-600 dark:text-slate-300">{t("Username")}</span>
             <input 
               type="text" 
               className="w-full h-10 rounded-md pl-2
@@ -43,7 +45,7 @@ function LoginPage(){
           </div>
           <div className="relative border border-slate-300 dark:border-slate-950 rounded-md">
             <span className="absolute -top-3 left-3 bg-white dark:bg-slate-800 px-1 text-sm text-slate-600 dark:text-slate-300">
-              Password
+              {t("Password")}
             </span>
             <input
               type="password"
@@ -55,11 +57,11 @@ function LoginPage(){
             />
           </div>
         </div>
-        <p className="text-center dark:text-slate-300">Не маєте акаунту? <Link className="font-semibold cursor-pointer" to="/registration">Зареєструватися</Link>!</p>
+        <p className="text-center dark:text-slate-300">{t("Don't have an account?")} <Link className="font-semibold cursor-pointer" to="/registration">{t("Registration")}</Link>!</p>
         <div className="flex flex-col gap-2">
           <button className="w-full h-10 bg-[#02c1eb] text-cyan-50 d rounded-sm shadow-md cursor-pointer focus:outline-[#02c1eb]"
-          onClick={handleLogin}>Log in</button>
-          <Link className="pl-3 cursor-pointer text-sm dark:text-slate-300" to="/reset_request">Забули пароль?</Link>
+          onClick={handleLogin}>{t("Log in")}</button>
+          <Link className="pl-3 cursor-pointer text-sm dark:text-slate-300" to="/reset_request">{t("Forgot password?")}</Link>
         </div>
         {error && <p className="text-red-600">{error}</p>}
       </div>

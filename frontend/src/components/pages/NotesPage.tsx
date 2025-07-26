@@ -37,7 +37,7 @@ function NewNoteModal({ onClose, onSave } : NewNoteModalProps) {
     if (!title.trim() && !content.trim()) return;
 
     try {
-      // const newNote = await axios.post('http://localhost:8000/notes/create', { title, content}, {withCredentials: true });
+      await axios.post('http://localhost:8000/notes/create', { title, content}, {withCredentials: true });
       await onSave();
     } catch (error){
       console.error("Error making note:", error);
@@ -177,9 +177,7 @@ function NotesPage({ sidebarOpen }: NotesPageProps) {
 
   const deleteNote = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:8000/notes/${id}`, { withCredentials: true });
-      // const updatedNotes = notes.filter(note => note.id !== id);
-      // setNotes(updatedNotes);
+      await axios.delete(`http://localhost:8000/notes/delete/${id}`, { withCredentials: true });
       await fetchNotes();
     } catch (error) {
       console.error("Error deleting note:", error);
@@ -188,7 +186,7 @@ function NotesPage({ sidebarOpen }: NotesPageProps) {
 
 
   return (
-    <div className={`h-full flex flex-col gap-5 text-cyan-950 dark:text-slate-400 transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
+    <div className={`h-full flex flex-col gap-5 text-cyan-950 dark:text-slate-400 transition-all duration-300 ${!sidebarOpen && "p-5"}`}>
       <div className="h-max flex flex-row justify-between items-center ">
         <p className="text-lg md:text-xl font-medium dark:text-slate-300">{t("Notes")}</p>
         <NewNoteButton onSave={saveNote} />

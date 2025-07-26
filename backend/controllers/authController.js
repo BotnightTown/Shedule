@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import transporter from "../config/emailConfig.js";
 import { getTemplate } from "../utils/template.js";
-import { findUserByEmail, updateUserPasswordById } from "../models/userModule.js";
+import { findUserByEmail, updateUserPasswordById } from "../models/userModel.js";
 
 export const requestPasswordReset = async (req, res) => {
   const { email } = req.body;

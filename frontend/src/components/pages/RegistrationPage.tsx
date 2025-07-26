@@ -22,11 +22,11 @@ function RegistrationPage(){
     setError(null);
     setSuccess(null);
     try {
-      await axios.post("http://localhost:8000/register", {
+      await axios.post("http://localhost:8000/user/register", {
         username, email, password, selectedGroup, selectedSubgroup
       }, {withCredentials: true})
-      await axios.post("http://localhost:8000/login", {username, password}, {withCredentials: true});
-      const res = await axios.get("http://localhost:8000/profile", {withCredentials: true});
+      await axios.post("http://localhost:8000/user/login", {username, password}, {withCredentials: true});
+      const res = await axios.get("http://localhost:8000/user/profile", {withCredentials: true});
       setUser(res.data.user);
       setSuccess("Реєстрація успішна! Перенаправлення..");
       setTimeout(() => {

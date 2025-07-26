@@ -1,6 +1,6 @@
 {
   "Hello": "Привіт",
-  "Choose what you want": "Виберіть, що Ви хочете",
+  "Choose what you want": "Виберіть, що ви хочете",
   "Today" : "Сьогодні",
   "Today's Lessons" : "Сьогоднішні заняття",
   "No lessons today" : "Сьогодні немає занять",
@@ -43,8 +43,9 @@
   "Write your note" : "Напишіть свою нотатку",
   "Edit" : "Редагувати",
   "Delete" : "Видалити",
-  "Login" : "Увійти",
+  "Log in" : "Увійти",
   "Logout" : "Вийти з акаунту",
+  "Login" : "Увійти в акаунт",
   "Loading" : "Завантаження",
   "Reset password" : "Відновити пароль",
   "Enter email" : "Введіть email уведений при реєстрації.",
@@ -53,7 +54,17 @@
   "Registration2" : "Зареєструватися",
   "Username" : "Ім'я користувача",
   "Password" : "Пароль",
-  "Already have an account" : "Вже маєте акаунт?",
+  "Already have an account?" : "Вже маєте акаунт?",
   "Input new password" : "Введіть новий пароль",
-  "Change" : "Змінити"
+  "Change" : "Змінити",
+  "Schedule type" : "Тип розкладу",
+  "Automatically" : "Автоматично",
+  "Manually" : "Вручну",
+  "Change password" : "Змінити пароль",
+  "Change password2" : "Зміна пароля",
+  "Old password" : "Старий пароль",
+  "New password" : "Новий пароль",
+  "Repeat password" : "Повторіть пароль",
+  "Don't have an account?" : "Не маєте акаунту?",
+  "Forgot password?" : "Забули акаунт?"
 }

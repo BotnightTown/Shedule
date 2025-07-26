@@ -5,7 +5,6 @@ import { UserContext } from '../../UserContext';
 import axios from "axios";
 import DarkMode from "../components/settings/DarkMode";
 import Account from "../components/settings/Account";
-import WeekType from "../components/settings/WeekType";
 import LanguageSwitch from "../components/settings/LanguageSwitch";
 
 interface SettingsPageProps{
@@ -19,7 +18,7 @@ function SettingsPage({ sidebarOpen }: SettingsPageProps){
 
     const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:8000/logout", { withCredentials: true });
+      await axios.get("http://localhost:8000/user/logout", { withCredentials: true });
       setUser(null);
       navigate("/login");
     } catch (err) {
@@ -28,7 +27,7 @@ function SettingsPage({ sidebarOpen }: SettingsPageProps){
   };
 
   return(
-    <div className={`h-full flex flex-col gap-3 text-cyan-950 dark:text-gray-200 transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
+    <div className={`h-full flex flex-col gap-3 text-cyan-950 dark:text-gray-200 transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}overflow-y-auto`}>
       <div className="h-max flex flex-row justify-between items-center ">
         <p className="text-xl md:text-2xl font-medium dark:text-slate-300">{t('Settings')}</p>
       </div>
@@ -37,10 +36,6 @@ function SettingsPage({ sidebarOpen }: SettingsPageProps){
           <p className="text-base md:text-lg font-medium py-3 dark:text-slate-300">{t("View settings")}</p>
           <DarkMode />
           <LanguageSwitch />
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-base md:text-lg font-medium py-3 dark:text-slate-300">{t("Schedule settings")}</p>
-          <WeekType />
         </div>
         <div className="flex flex-col gap-2">
           <p className="text-base md:text-lg font-medium py-3 dark:text-slate-300">{t("Account settings")}</p>

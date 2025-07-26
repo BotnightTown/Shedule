@@ -1,4 +1,5 @@
-import { register as registerUser, login as loginUser, updateInfo as updateUser } from '../models/userModule.js';
+import bcrypt from 'bcrypt';
+import { register as registerUser, login as loginUser, updateInfo as updateUser, getPassword, updatePassword } from '../models/userModel.js';
 
 export const register = async (req, res) => {
   try {
@@ -67,3 +68,28 @@ export const updateInfo = async (req, res) => {
     res.status(500).json({error: err.message })
   }
 }
+
+export const changePassword = async (req, res) => {
+  const { id: id_user } = req.session.user;
+  const { oldPassword, newPassword } = req.body;
+
+  if (!id_user || !oldPassword || !newPassword) {
+    return res.status(400).send({ message: "Недостатньо даних" });
+  }
+
+  try {
+    const storedHash = await getPassword(id_user);
+    const isMatch = await bcrypt.compare(oldPassword, storedHash);
+    if (!isMatch) {
+      return res.status(401).send({ message: "Старий пароль неправильний" });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    await updatePassword(id_user, hashedNewPassword);
+
+    res.send({ message: "Пароль успішно змінено" });
+  } catch (error) {
+    console.error("Change password error:", error);
+    res.status(500).send({ message: error || "Внутрішня помилка сервера" });
+  }
+};

@@ -87,3 +87,25 @@ export const updateUserPasswordById = (id_user, newHashedPassword) => {
     });
   });
 };
+
+export const getPassword = (id_user) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT password FROM users WHERE id_user = ?";
+    db.query(sql, [id_user], (err, results) => {
+      if (err) return reject("Помилка БД");
+      if (results.length === 0) return reject("Користувача не знайдено");
+      resolve(results[0].password);
+    });
+  });
+};
+
+export const updatePassword = (id_user, newHashedPassword) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE users SET password = ? WHERE id_user = ?";
+    db.query(sql, [newHashedPassword, id_user], (err) => {
+      if (err) return reject("Не вдалося оновити пароль");
+      resolve();
+    });
+  });
+};
+

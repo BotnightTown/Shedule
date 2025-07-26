@@ -27,7 +27,7 @@ function LanguageSwitch() {
           <option value="en">English</option>
         </select>
       </div>
-      </div>
+    </div>
   );
 }
 

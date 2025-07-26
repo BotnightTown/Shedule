@@ -20,7 +20,7 @@ function HelloText(){
   const { t } = useTranslation();
 
   return(
-    <div className="w-full flex flex-col items-center gap-3 pt-6 pb-6">
+    <div className="w-full flex flex-col items-center gap-3 py-5">
       <p className="text-2xl md:text-3xl font-medium dark:text-slate-300">{t('Hello')}, {user?.username}</p>
       <p className="text-base md:text-lg dark:text-slate-300">{t('Choose what you want')}</p>
     </div>
@@ -59,7 +59,7 @@ function WelcomePage({sidebarOpen} : WelcomePageProps){
           alt="Today"
         />
       </div>
-      <NavLink className={`transition-all duration-300 ${sidebarOpen ? "p-0" : "p-5"}`} to={"/today"}>
+      <NavLink className={`transition-all duration-300 ${!sidebarOpen && "p-5"}`} to={"/today"}>
         <LessonNow />
       </NavLink>
     </div>

@@ -62,7 +62,7 @@ function DaySchedule({dayOfWeek, sidebarOpen, lessons} : DayScheduleProps){
       </div>
       <div
         className={`
-          w-full ${sidebarOpen ? 'p-5 px-0' : 'p-0'} flex flex-col gap-4
+          w-full  flex flex-col gap-4
           overflow-hidden transition-all duration-1000 ease-in-out
           ${isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}
         `}
@@ -99,8 +99,7 @@ function SchedulePage({ sidebarOpen }: SchedulePageProps){
       try {
         const group = user?.group;
         const subgroup = user?.subgroup;
-        const weekType = localStorage.getItem('weekType') || 'upper';
-        const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}`);
         const data = response.data;
 
         const grouped : any = {};
@@ -129,11 +128,11 @@ function SchedulePage({ sidebarOpen }: SchedulePageProps){
   ];
 
   return(
-    <div className="h-full flex flex-col gap-5 ">
+    <div className={`h-full flex flex-col gap-5 transition-all duration-300 ${!sidebarOpen && "p-5"}`}>
       <p className={`text-xl md:text-2xl font-medium transition-all duration-300 dark:text-slate-300 ${!sidebarOpen ? 'pl-7' : 'pl-2'}`}>
         {t("Schedule")}
       </p>
-      <div className={`w-full h-screen overflow-y-auto transition-all duration-300 ${!sidebarOpen ? 'p-5 pt-0' : ''}`}>
+      <div className={`w-full h-screen overflow-y-auto`}>
         {daysOfWeek.map(day => (
           <DaySchedule 
             key={day.value}

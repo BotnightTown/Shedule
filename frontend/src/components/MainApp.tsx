@@ -12,6 +12,7 @@ import NotesPage from "./pages/NotesPage";
 import SettingsPage from "./pages/SettingsPage";
 import ResetRequestPage from "./pages/ResetRequestPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import ChangePassword from "./pages/ChangePassword";
 
 interface MainAppProps {
   sidebarOpen : boolean;
@@ -45,6 +46,7 @@ function MainApp ({ sidebarOpen, setSidebarOpen } : MainAppProps){
               <Route path="/schedule" element={<SchedulePage sidebarOpen={sidebarOpen} />}/>
               <Route path="/notes" element={<NotesPage sidebarOpen={sidebarOpen} />}/>
               <Route path="/settings" element={<SettingsPage sidebarOpen={sidebarOpen} />}/>
+              <Route path="/change_password" element={<ChangePassword sidebarOpen={sidebarOpen} />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </div>

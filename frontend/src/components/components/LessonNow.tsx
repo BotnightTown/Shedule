@@ -11,7 +11,6 @@ type LessonType = {
   teacher: string;
 };
 
-
 function LessonNow(){
   const [currentLesson, setCurrentLesson] = useState<LessonType | null>(null);
   const userContext = useContext(UserContext);
@@ -24,8 +23,7 @@ function LessonNow(){
       try {
         const group = user?.group;
         const subgroup = user?.subgroup;
-        const weekType = localStorage.getItem('weekType') || 'upper';
-        const response = await axios.get(`http://localhost:8000/today/current?group=${group}&subgroup=${subgroup}&weekType=${weekType}`);
+        const response = await axios.get(`http://localhost:8000/today/current?group=${group}&subgroup=${subgroup}`);
         setCurrentLesson(response.data[0]);
       } catch (error) {
         console.error("Error fetching current lesson:", error);
