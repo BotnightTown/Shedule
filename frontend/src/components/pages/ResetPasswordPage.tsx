@@ -1,13 +1,14 @@
 import { useState } from "react"
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-// import { Link } from "react-router";
 import axios from 'axios';
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 function ResetRequestPage(){
   const { t } = useTranslation();
   const { token } = useParams();
   const [newPassword, setNewPassword] = useState<string>('');
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [message, setMessage] = useState<string | null>(null);
 
   const handleReset = async () => {
@@ -34,13 +35,20 @@ function ResetRequestPage(){
             {t("Password")}
           </span>
           <input
-            type="password"
+            type={!isVisible ? "password" : "text"}
             className="w-full h-10 rounded-md pl-2
               border border-slate-300 dark:border-slate-950
               hover:outline-1 hover:outline-cyan-400
-              focus:outline-2 focus:outline-[#02c1eb]"
+              focus:outline-2 focus:outline-[#02c1eb]
+              transition-all duration-300"
             onChange={e => setNewPassword(e.target.value)}
           />
+          <span 
+            className={`absolute right-0 top-0 translate-y-1/2 -translate-x-1/2 text-lg cursor-pointer text-slate-600 dark:text-slate-300 transition-all duration-300 hover:dark:text-slate-300 ${newPassword === "" ? "dark:text-slate-950" : "dark:text-slate-300"}`}
+            onClick={()=>setIsVisible(!isVisible)}
+          >
+            {isVisible ? <FaRegEye className="dark:text-slate-300"/> : <FaRegEyeSlash /> }
+          </span>
         </div>
         <button 
           className="w-full h-10 bg-custom-blue dark:bg-slate-900 text-cyan-50 hover:bg-custom-blue hover:dark:bg-slate-700 rounded-sm shadow-md cursor-pointer focus:outline-[#02c1eb]" 

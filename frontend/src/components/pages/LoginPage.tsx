@@ -4,11 +4,13 @@ import { useTranslation } from 'react-i18next';
 import axios, { AxiosError } from "axios";
 import { useContext } from "react";
 import { UserContext } from "../../UserContext";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 function LoginPage(){
   const { t } = useTranslation();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const { setUser } = useContext(UserContext)!;
   const navigate = useNavigate();
@@ -33,7 +35,9 @@ function LoginPage(){
         <h2 className="text-2xl font-semibold dark:text-slate-300">{t("Login")}</h2>
         <div className="flex flex-col gap-5 pt-1">
           <div className="relative border border-slate-300 dark:border-slate-950 rounded-md">
-            <span className="absolute -top-3 left-3 bg-white dark:bg-slate-800 px-1 text-sm text-slate-600 dark:text-slate-300">{t("Username")}</span>
+            <span className="absolute -top-3 left-3 bg-white dark:bg-slate-800 px-1 text-sm text-slate-600 dark:text-slate-300">
+              {t("Username")}
+            </span>
             <input 
               type="text" 
               className="w-full h-10 rounded-md pl-2
@@ -48,13 +52,19 @@ function LoginPage(){
               {t("Password")}
             </span>
             <input
-              type="password"
+              type={!isVisible ? "password" : "text"}
               className="w-full h-10 rounded-md pl-2
                 border border-slate-300 dark:border-slate-950
                 hover:outline-1 hover:outline-cyan-400
                 focus:outline-2 focus:outline-[#02c1eb]"
               onChange={e => setPassword(e.target.value)}
             />
+            <span 
+              className={`absolute right-0 top-0 translate-y-1/2 -translate-x-1/2 text-lg cursor-pointer text-slate-600 dark:text-slate-300 transition-all duration-300 hover:dark:text-slate-300 ${password === "" ? "dark:text-slate-950" : "dark:text-slate-300"}`}
+              onClick={()=>setIsVisible(!isVisible)}
+            >
+              {isVisible ? <FaRegEye className="dark:text-slate-300"/> : <FaRegEyeSlash /> }
+            </span>
           </div>
         </div>
         <p className="text-center dark:text-slate-300">{t("Don't have an account?")} <Link className="font-semibold cursor-pointer" to="/registration">{t("Registration")}</Link>!</p>

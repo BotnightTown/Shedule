@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router";
 import { useTranslation } from 'react-i18next';
 import axios, { AxiosError } from 'axios';
 import { UserContext } from "../../UserContext";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 function RegistrationPage(){
   const { t } = useTranslation();
@@ -11,6 +12,7 @@ function RegistrationPage(){
   const [password, setPassword] = useState<string>("");
   const [selectedGroup, setSelectedGroup] = useState<string>("");
   const [selectedSubgroup, setSelectedSubgroup] = useState<string>("");
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const groups = ["208", "209"];
   const subgroups = ["1", "2"];
   const [error, setError] = useState<string | null>(null);
@@ -63,12 +65,19 @@ function RegistrationPage(){
           </div>
           <div className="relative border border-slate-300 dark:border-slate-950 rounded-md">
             <span className="absolute -top-3 left-3 bg-white dark:bg-slate-800 px-1 text-sm text-slate-600 dark:text-slate-300">{t("Password")}</span>
-            <input type="password" 
+            <input type={!isVisible ? "password" : "text"} 
               className="w-full h-10 rounded-md pl-2
                 border border-slate-300 dark:border-slate-950
                 hover:outline-1 hover:outline-cyan-400
                 focus:outline-2 focus:outline-[#02c1eb]"
-            onChange={e => setPassword(e.target.value)}/>
+              onChange={e => setPassword(e.target.value)}
+            />
+            <span 
+              className={`absolute right-0 top-0 translate-y-1/2 -translate-x-1/2 text-lg cursor-pointer text-slate-600 dark:text-slate-300 transition-all duration-300 hover:dark:text-slate-300 ${password === "" ? "dark:text-slate-950" : "dark:text-slate-300"}`}
+              onClick={()=>setIsVisible(!isVisible)}
+            >
+              {isVisible ? <FaRegEye className="dark:text-slate-300"/> : <FaRegEyeSlash /> }
+            </span>
           </div>
         </div>
         <div className="flex flex-col gap-3">
@@ -110,7 +119,7 @@ function RegistrationPage(){
         </button>
         {error && <p className="text-red-600">{error}</p>}
         {success && <p className="text-green-600">{success}</p>}
-        <p className="text-center dark:text-slate-300">{t("Already have an account")} <Link className="font-semibold cursor-pointer focus:outline focus:outline-[#02c1eb]" to="/login">{t("Login")}</Link>!</p>
+        <p className="text-center dark:text-slate-300">{t("Already have an account?")} <Link className="font-semibold cursor-pointer focus:outline focus:outline-[#02c1eb]" to="/login">{t("Login")}</Link>!</p>
       </form>
     </div>
   )

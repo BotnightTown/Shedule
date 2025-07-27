@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useTranslation } from 'react-i18next';
 import { useState } from "react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 interface ChangePasswordType {
   sidebarOpen: boolean;
@@ -13,6 +14,9 @@ function ChangePassword({sidebarOpen}: ChangePasswordType){
     newPassword: "",
     confirmNewPassword: ""
   });
+  const [isOldVisible, setIsOldVisible] = useState<boolean>(false);
+  const [isNewVisible, setIsNewVisible] = useState<boolean>(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
@@ -61,7 +65,7 @@ function ChangePassword({sidebarOpen}: ChangePasswordType){
             {t("Old password")}
           </span>
           <input 
-            type="password" 
+            type={!isOldVisible ? "password" : "text"} 
             className="w-full h-10 rounded-md pl-2
               border border-slate-300 dark:border-slate-950
               hover:outline-1 hover:outline-cyan-400
@@ -70,6 +74,12 @@ function ChangePassword({sidebarOpen}: ChangePasswordType){
             value={formData.oldPassword}
             onChange={handleChange}
           />
+          <span 
+            className={`absolute right-0 top-0 translate-y-1/2 -translate-x-1/2 text-lg cursor-pointer text-slate-600 dark:text-slate-300 transition-all duration-300 hover:dark:text-slate-300 ${formData.oldPassword === "" ? "dark:text-slate-500" : "dark:text-slate-300"}`}
+            onClick={()=>setIsOldVisible(!isOldVisible)}
+          >
+            {isOldVisible ? <FaRegEye className=" dark:text-slate-300"/> : <FaRegEyeSlash className="text-s"/> }
+          </span>
         </div>
         <div className="relative border border-slate-300 dark:border-2 dark:border-[#02c1eb] rounded-md">
           <span 
@@ -78,7 +88,7 @@ function ChangePassword({sidebarOpen}: ChangePasswordType){
             {t("New password")}
           </span>
           <input 
-            type="password" 
+            type={!isNewVisible ? "password" : "text"} 
             className="w-full h-10 rounded-md pl-2
               border border-slate-300 dark:border-slate-950
               hover:outline-1 hover:outline-cyan-400
@@ -87,6 +97,12 @@ function ChangePassword({sidebarOpen}: ChangePasswordType){
             value={formData.newPassword}
             onChange={handleChange}
           />
+          <span 
+            className={`absolute right-0 top-0 translate-y-1/2 -translate-x-1/2 text-lg cursor-pointer text-slate-600 dark:text-slate-300 transition-all duration-300 hover:dark:text-slate-300 ${formData.newPassword === "" ? "dark:text-slate-500" : "dark:text-slate-300"}`}
+            onClick={()=>setIsNewVisible(!isNewVisible)}
+          >
+            {isNewVisible ? <FaRegEye className=" dark:text-slate-300"/> : <FaRegEyeSlash className="text-s"/> }
+          </span>
         </div>
         <div className="relative border border-slate-300 dark:border-2 dark:border-[#02c1eb] rounded-md">
           <span 
@@ -95,7 +111,7 @@ function ChangePassword({sidebarOpen}: ChangePasswordType){
             {t("Repeat password")}
           </span>
           <input 
-            type="password" 
+            type={!isConfirmVisible ? "password" : "text"} 
             className="w-full h-10 rounded-md pl-2
               border border-slate-300 dark:border-slate-950
               hover:outline-1 hover:outline-cyan-400
@@ -104,6 +120,12 @@ function ChangePassword({sidebarOpen}: ChangePasswordType){
             value={formData.confirmNewPassword}
             onChange={handleChange}
           />
+          <span 
+            className={`absolute right-0 top-0 translate-y-1/2 -translate-x-1/2 text-lg cursor-pointer text-slate-600 dark:text-slate-300 transition-all duration-300 hover:dark:text-slate-300 ${formData.confirmNewPassword === "" ? "dark:text-slate-500" : "dark:text-slate-300"}`}
+            onClick={()=>setIsConfirmVisible(!isConfirmVisible)}
+          >
+            {isConfirmVisible ? <FaRegEye className=" dark:text-slate-300"/> : <FaRegEyeSlash className="text-s"/> }
+          </span>
         </div>
         {error && <p>{error}</p>}
         <button 
