@@ -45,7 +45,7 @@ function Lesson({number, classroom, name, teacher} : LessonProps){
   )
 }
 
-function DaySchedule({dayOfWeek, sidebarOpen, lessons} : DayScheduleProps){
+function DaySchedule({dayOfWeek, lessons} : DayScheduleProps){
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const toggleOpen = () => setIsOpen(!isOpen);
