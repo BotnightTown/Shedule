@@ -5,6 +5,8 @@ import { UserContext } from "../../UserContext";
 import TodayLessons from "../components/TodayLessons";
 import LessonNow from "../components/LessonNow";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 interface TodayPageProps {
   sidebarOpen: boolean;
 }
@@ -31,7 +33,7 @@ function TodayPage({ sidebarOpen } : TodayPageProps){
       try {
         const group = user?.group;
         const subgroup = user?.subgroup;
-        const response = await axios.get(`http://localhost:8000/today/all?group=${group}&subgroup=${subgroup}`);
+        const response = await axios.get(`${API_BASE_URL}/today/all?group=${group}&subgroup=${subgroup}`);
         setAllTodayLesson(response.data);
       } catch (error) {
         console.error("Error fetching today's lesson:", error);

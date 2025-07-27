@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import axios from "axios";
 import { UserContext } from "../../UserContext";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 interface LessonProps {
   number: string;
   classroom: string;
@@ -99,7 +101,7 @@ function SchedulePage({ sidebarOpen }: SchedulePageProps){
       try {
         const group = user?.group;
         const subgroup = user?.subgroup;
-        const response = await axios.get(`http://localhost:8000/schedule?group=${group}&subgroup=${subgroup}`);
+        const response = await axios.get(`${API_BASE_URL}/schedule?group=${group}&subgroup=${subgroup}`);
         const data = response.data;
 
         const grouped : any = {};

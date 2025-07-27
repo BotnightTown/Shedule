@@ -4,6 +4,8 @@ import { Link } from "react-router";
 import { UserContext } from "../../../UserContext";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function Account() {
   const { t } = useTranslation();
   const { user, setUser } = useContext(UserContext)!;
@@ -19,7 +21,7 @@ function Account() {
   const handleSubmit = async () => {
     try {
       setStatus(null);
-      await axios.patch("http://localhost:8000/user/updateInfo", {
+      await axios.patch(`${API_BASE_URL}/user/updateInfo`, {
         username: selectedUsername,
         group: selectedGroup,
         subgroup: selectedSubgroup

@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 interface ChangePasswordType {
   sidebarOpen: boolean;
 }
@@ -43,7 +45,7 @@ function ChangePassword({sidebarOpen}: ChangePasswordType){
   const handleSubmit = async () => {
     setError(null);
     try{
-      const result = await axios.post("http://localhost:8000/user/change_password", {
+      const result = await axios.post(`${API_BASE_URL}/user/change_password`, {
         oldPassword: formData.oldPassword,
         newPassword: formData.newPassword,
       }, { withCredentials: true });

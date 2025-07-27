@@ -4,6 +4,8 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { IoChevronForward } from "react-icons/io5";
 import { useTranslation } from 'react-i18next';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 interface NewNoteModalProps {
   onClose: () => void;
   onSave: () => Promise<void>;
@@ -37,7 +39,7 @@ function NewNoteModal({ onClose, onSave } : NewNoteModalProps) {
     if (!title.trim() && !content.trim()) return;
 
     try {
-      await axios.post('http://localhost:8000/notes/create', { title, content}, {withCredentials: true });
+      await axios.post(`${API_BASE_URL}/notes/create`, { title, content}, {withCredentials: true });
       await onSave();
     } catch (error){
       console.error("Error making note:", error);

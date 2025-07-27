@@ -5,6 +5,8 @@ import axios, { AxiosError } from 'axios';
 import { UserContext } from "../../UserContext";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function RegistrationPage(){
   const { t } = useTranslation();
   const [username, setUsername] = useState<string>("");
@@ -24,11 +26,11 @@ function RegistrationPage(){
     setError(null);
     setSuccess(null);
     try {
-      await axios.post("http://localhost:8000/user/register", {
+      await axios.post(`${API_BASE_URL}/user/register`, {
         username, email, password, selectedGroup, selectedSubgroup
       }, {withCredentials: true})
-      await axios.post("http://localhost:8000/user/login", {username, password}, {withCredentials: true});
-      const res = await axios.get("http://localhost:8000/user/profile", {withCredentials: true});
+      await axios.post(`${API_BASE_URL}/user/login`, {username, password}, {withCredentials: true});
+      const res = await axios.get(`${API_BASE_URL}/user/profile`, {withCredentials: true});
       setUser(res.data.user);
       setSuccess("Реєстрація успішна! Перенаправлення..");
       setTimeout(() => {

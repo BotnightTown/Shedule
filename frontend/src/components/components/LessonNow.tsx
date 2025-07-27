@@ -3,6 +3,8 @@ import { useState, useEffect, useContext } from "react";
 import { useTranslation } from 'react-i18next';
 import { UserContext } from "../../UserContext";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 type LessonType = {
   day_of_week: string;
   start_time: string;
@@ -23,7 +25,7 @@ function LessonNow(){
       try {
         const group = user?.group;
         const subgroup = user?.subgroup;
-        const response = await axios.get(`http://localhost:8000/today/current?group=${group}&subgroup=${subgroup}`);
+        const response = await axios.get(`${API_BASE_URL}/today/current?group=${group}&subgroup=${subgroup}`);
         setCurrentLesson(response.data[0]);
       } catch (error) {
         console.error("Error fetching current lesson:", error);

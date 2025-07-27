@@ -7,6 +7,8 @@ import DarkMode from "../components/settings/DarkMode";
 import Account from "../components/settings/Account";
 import LanguageSwitch from "../components/settings/LanguageSwitch";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 interface SettingsPageProps{
   sidebarOpen: boolean;
 }
@@ -18,7 +20,7 @@ function SettingsPage({ sidebarOpen }: SettingsPageProps){
 
     const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:8000/user/logout", { withCredentials: true });
+      await axios.get(`${API_BASE_URL}/user/logout`, { withCredentials: true });
       setUser(null);
       navigate("/login");
     } catch (err) {

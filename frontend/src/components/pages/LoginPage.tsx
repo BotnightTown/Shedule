@@ -6,6 +6,8 @@ import { useContext } from "react";
 import { UserContext } from "../../UserContext";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function LoginPage(){
   const { t } = useTranslation();
   const [username, setUsername] = useState<string>("");
@@ -18,8 +20,8 @@ function LoginPage(){
   const handleLogin = async () => {
     setError(null);
     try {
-      await axios.post("http://localhost:8000/user/login", {username, password}, {withCredentials: true});
-      const res = await axios.get("http://localhost:8000/user/profile", {withCredentials: true});
+      await axios.post(`${API_BASE_URL}/user/login`, {username, password}, {withCredentials: true});
+      const res = await axios.get(`${API_BASE_URL}/user/profile`, {withCredentials: true});
       setUser(res.data.user);
       navigate("/");
     } catch (err) {

@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import axios from 'axios';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function ResetRequestPage(){
   const { t } = useTranslation();
   const { token } = useParams();
@@ -13,7 +15,7 @@ function ResetRequestPage(){
 
   const handleReset = async () => {
     try {
-      await axios.post('http://localhost:8000/auth/reset_password', {
+      await axios.post(`${API_BASE_URL}/auth/reset_password`, {
         token,
         newPassword,
       });

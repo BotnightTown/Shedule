@@ -3,6 +3,8 @@ import { useState } from "react"
 import axios, { AxiosError } from 'axios';
 import { useTranslation } from "react-i18next";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function ResetRequestPage(){
   const [email, setEmail] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
@@ -12,7 +14,7 @@ function ResetRequestPage(){
   const handleReset = async () => {
     setError(null);
     try {
-      await axios.post("http://localhost:8000/auth/reset_request", { email });
+      await axios.post(`${API_BASE_URL}/auth/reset_request`, { email });
       setSuccess("Пароль успішно відправлено на пошту")
       console.log(error); // тимчасове рішення
     } catch (err) {
