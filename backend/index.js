@@ -13,7 +13,11 @@ const app = express();
 app.use(json());
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    'https://shedule-three.vercel.app',
+    'http://192.168.0.101:5173'
+  ],
   credentials: true
 }));
 

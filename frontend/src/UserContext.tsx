@@ -1,6 +1,8 @@
 import { createContext, useState, useEffect, type Dispatch, type SetStateAction,  } from "react";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 interface UserContextType {
   user: any;
   setUser: Dispatch<SetStateAction<any>>;
@@ -20,7 +22,7 @@ export function UserProvider({ children }: any) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/user/profile", {
+        const res = await axios.get(`${API_BASE_URL}/user/profile`, {
           withCredentials: true
         });
         setUser(res.data.user);
