@@ -162,7 +162,7 @@ function NotesPage({ sidebarOpen }: NotesPageProps) {
 
   const fetchNotes = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/notes/all', { withCredentials: true });
+      const response = await axios.get(`${API_BASE_URL}/notes/all`, { withCredentials: true });
       setNotes(response.data);
     } catch (err) {
       console.error("Error fetching schedule:", err)
@@ -179,7 +179,7 @@ function NotesPage({ sidebarOpen }: NotesPageProps) {
 
   const deleteNote = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:8000/notes/delete/${id}`, { withCredentials: true });
+      await axios.delete(`${API_BASE_URL}/notes/delete/${id}`, { withCredentials: true });
       await fetchNotes();
     } catch (error) {
       console.error("Error deleting note:", error);

@@ -31,9 +31,9 @@ export const getCurrent = async (group, subgroup) => {
       LIMIT 1;
     `
 
-    // const result = await pool.query(sql, [currentDate, group, subgroup, currentTime]);
-    const result = await pool.query(sql, [testDate, group, subgroup, testTime]);
-    return result;
+    // const rows = await pool.query(sql, [currentDate, group, subgroup, currentTime]);
+    const [rows] = await pool.query(sql, [testDate, group, subgroup, testTime]);
+    return rows;
   } catch (err) {
     throw err;
   }
@@ -68,9 +68,9 @@ export const getToday = async (group, subgroup) => {
       ORDER BY pt.start_time;
     `
 
-    // const results = await pool.query(sql, [group, subgroup, currentDay]);
-    const results = await pool.query(sql, [group, subgroup, testDay]);
-    return results;
+    // const rows = await pool.query(sql, [group, subgroup, currentDay]);
+    const [rows] = await pool.query(sql, [group, subgroup, testDay]);
+    return rows;
   } catch (err) {
     throw err;
   }
