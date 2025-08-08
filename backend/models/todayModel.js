@@ -1,7 +1,7 @@
-import db from '../config/db.js';
+import pool from '../config/db.js';
 
-export const getCurrent = (group, subgroup) => {
-  return new Promise((resolve, reject) => {
+export const getCurrent = async (group, subgroup) => {
+  try {
     const now = new Date();
     const currentDate = now.toISOString().slice(0, 10);
     const testDate = "2025-04-15";
@@ -30,16 +30,17 @@ export const getCurrent = (group, subgroup) => {
       ORDER BY s.id_subject
       LIMIT 1;
     `
-    // db.query(sql, [currentDate, group, subgroup, currentTime], (err, results) => {
-    db.query(sql, [testDate, group, subgroup, testTime], (err, results) => {
-      if (err) reject(err);
-      else resolve(results);
-    });
-  });
+
+    // const result = await pool.query(sql, [currentDate, group, subgroup, currentTime]);
+    const result = await pool.query(sql, [testDate, group, subgroup, testTime]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
 }
 
-export const getToday = (group, subgroup) => {
-  return new Promise((resolve, reject) => {
+export const getToday = async (group, subgroup) => {
+  try {
     const now = new Date();
     const currentDate = now.toISOString().slice(0, 10);
     const days = [0, 1, 2, 3, 4, 5, 6];
@@ -67,10 +68,9 @@ export const getToday = (group, subgroup) => {
       ORDER BY pt.start_time;
     `
 
-    // db.query(sql, [currentDay, group, subgroup], (err, results) => {
-    db.query(sql, [group, subgroup, testDay], (err, results) => {
-      if (err) reject(err);
-      else resolve(results);
-    });
-  });
+    // const results = await pool.query(sql, [group, subgroup, currentDay]);
+    const results = await pool.query(sql, [group, subgroup, testDay]);
+  } catch (err) {
+    throw err;
+  }
 }

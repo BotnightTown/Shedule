@@ -1,36 +1,29 @@
-import db from '../config/db.js';
+import pool from '../config/db.js';
 
-export const getNotes = (id_user) => {
-  return new Promise((resolve, reject) => {
+export const getNotes = async (id_user) => {
+  try{
     const sql = `SELECT * from notes where id_user = ?`
-
-    db.query(sql, [id_user], (err, results) => {
-      if (err) reject(err);
-      else resolve(results);
-    })
-  });
+    const [results] = await pool.query(sql, id_user);
+    return results;
+  } catch (err) {
+    throw err;
+  }
 }
-
-export const newNote = (id_user, title, content, date) => {
-  return new Promise((resolve, reject) => {
-    const now = new Date().toISOString().slice(0, 19).replace("T", " ");
-
+export const newNote = async (id_user, title, content, date) => {
+  try{
     const sql = `INSERT INTO notes (\`id_user\`, \`title\`, \`content\`, \`date\`) VALUES (?, ?, ?, ?)`;
-
-    db.query(sql, [id_user, title, content, date], (err, results) => {
-      if (err) reject(err)
-      else resolve(results)
-    })
-  })
-};
-
-export const deleteNote = (id_note) => {
-  return new Promise((resolve, reject) => {
+    const [results] = await pool.query(sql, [id_user, title, content, date])
+    return results;
+  } catch (err) {
+    throw err;
+  }
+}
+export const deleteNote = async (id_note) => {
+  try {
     const sql = `DELETE FROM notes WHERE \`id_note\` = ?`;
-
-    db.query(sql, [id_note], (err, results) => {
-      if (err) reject(err)
-      else resolve(results)
-    })
-  })
+    const [results] = await pool.query(sql, [id_note]);
+    return results;
+  } catch(err) {
+    throw err
+  }
 }

@@ -10,7 +10,7 @@ export const requestPasswordReset = async (req, res) => {
   if (!user) return res.status(404).json({ message: "Користувача не знайдено" });
 
   const token = jwt.sign({ id: user.id_user }, process.env.JWT_SECRET, { expiresIn: "15m" });
-  const resetLink = `http://localhost:5173/reset_password/${token}`;
+  const resetLink = `https://frontend-production-9bb9.up.railway.app//reset_password/${token}`;
 
   const html = getTemplate("reset-password", { resetLink });
 

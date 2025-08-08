@@ -1,7 +1,7 @@
-import db from '../config/db.js';
+import pool from '../config/db.js';
 
-export const getALL = (weekType, group, subgroup) => {
-  return new Promise((resolve, reject) => {
+export const getALL = async (weekType, group, subgroup) => {
+  try {
     const sql = `
       SELECT * 
       FROM practice.schedule
@@ -11,9 +11,9 @@ export const getALL = (weekType, group, subgroup) => {
       ORDER BY day_of_week, pair_number
     `;
 
-    db.query(sql, [weekType, group, subgroup], (err, results) => {
-      if (err) reject(err);
-      else resolve(results);
-    })
-  });
+    const results = pool.query(sql, [weekType, group, subgroup]);
+    return results;
+  } catch (err) {
+    throw err;
+  }
 }
