@@ -17,9 +17,11 @@ app.use(cors({
     'http://localhost:5173',
     'https://shedule-three.vercel.app',
     'http://192.168.0.101:5173',
-    "https://backend-production-cc70.up.railway.app"
+"https://backend-production-cc70.up.railway.app"
   ],
-  credentials: true
+methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  credentials: true,
+allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(session({
