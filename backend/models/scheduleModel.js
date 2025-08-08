@@ -4,7 +4,7 @@ export const getALL = async (weekType, group, subgroup) => {
   try {
     const sql = `
       SELECT * 
-      FROM practice.schedule
+      FROM schedule
       WHERE week_type IN ('all', ?)
         AND group_number = ?
         AND subgroup in (?, 'all')

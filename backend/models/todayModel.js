@@ -12,14 +12,14 @@ export const getCurrent = async (group, subgroup) => {
       SELECT s.*,
         DATE_FORMAT(pt.start_time, '%H:%i') AS start_time,
         DATE_FORMAT(pt.end_time, '%H:%i') AS end_time
-      FROM practice.schedule AS s
-      JOIN practice.pair_times AS pt ON s.pair_number = pt.pair_number
+      FROM schedule AS s
+      JOIN pair_times AS pt ON s.pair_number = pt.pair_number
       WHERE 
       (
         s.week_type = 'all'
         OR s.week_type = (
             SELECT w.week_type 
-            FROM practice.weeks as w
+            FROM weeks as w
             WHERE DATE(?) BETWEEN w.start_date AND w.end_date
             LIMIT 1
         )
@@ -51,14 +51,14 @@ export const getToday = async (group, subgroup) => {
       SELECT s.*,
         DATE_FORMAT(pt.start_time, '%H:%i') AS start_time,
         DATE_FORMAT(pt.end_time, '%H:%i') AS end_time
-      FROM practice.schedule AS s
-      JOIN practice.pair_times AS pt ON s.pair_number = pt.pair_number
+      FROM schedule AS s
+      JOIN pair_times AS pt ON s.pair_number = pt.pair_number
       WHERE 
       (
         s.week_type = 'all'
         OR s.week_type = (
             SELECT w.week_type 
-            FROM practice.weeks as w
+            FROM weeks as w
             LIMIT 1
         )
       )
