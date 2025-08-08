@@ -5,7 +5,7 @@ export const register = async (username, email, password, group, subgroup) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const sql = `
-      INSERT INTO users (username, email, password, \`group\`, subgroup) VALUES (?, ?, ?, ?, ?)
+      INSERT INTO users (username, email, password, group_number, subgroup) VALUES (?, ?, ?, ?, ?)
     `;
     const [result] = await pool.query(sql, [username, email, hashedPassword, group, subgroup]);
     return result;
@@ -41,7 +41,7 @@ export const login = async (username, password) => {
     return {
       id: user.id_user,
       username: user.username,
-      group: user.group,
+      group: user.group_number,
       subgroup: user.subgroup
     };
 
@@ -53,7 +53,7 @@ export const login = async (username, password) => {
 export const updateInfo = async (username, group, subgroup, id_user) => {
   const sql = `
     UPDATE users 
-    SET \`username\` = ?, \`group\` = ?, \`subgroup\` = ? 
+    SET username = ?, group_number = ?, subgroup = ? 
     WHERE id_user = ?
   `;
   const [result] = await pool.query(sql, [username, group, subgroup, id_user]);
