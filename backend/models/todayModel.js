@@ -70,6 +70,7 @@ export const getToday = async (group, subgroup) => {
 
     // const results = await pool.query(sql, [group, subgroup, currentDay]);
     const results = await pool.query(sql, [group, subgroup, testDay]);
+    return results;
   } catch (err) {
     throw err;
   }
