@@ -11,8 +11,8 @@ export const getALL = async (weekType, group, subgroup) => {
       ORDER BY day_of_week, pair_number
     `;
 
-    const [results] = pool.query(sql, [weekType, group, subgroup]);
-    return results;
+    const [rows] = await pool.query(sql, [weekType, group, subgroup]);
+    return rows;
   } catch (err) {
     throw err;
   }
