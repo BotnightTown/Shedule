@@ -16,7 +16,8 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'https://shedule-three.vercel.app',
-    'http://192.168.0.101:5173'
+    'http://192.168.0.101:5173',
+    "https://backend-production-cc70.up.railway.app"
   ],
   credentials: true
 }));
